@@ -1,0 +1,36 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <Styles.Resources>
+    <ResourceDictionary>
+      <ResourceDictionary.MergedDictionaries>
+        <ResourceInclude Source="avares://AvaloniaAppTemplate/Resources/Styles/Colors.axaml" />
+      </ResourceDictionary.MergedDictionaries>
+
+      <Thickness x:Key="SpacingSmall">4</Thickness>
+      <Thickness x:Key="SpacingMedium">12</Thickness>
+      <Thickness x:Key="SpacingLarge">20</Thickness>
+
+      <CornerRadius x:Key="CornerRadiusSmall">6</CornerRadius>
+      <CornerRadius x:Key="CornerRadiusMedium">12</CornerRadius>
+    </ResourceDictionary>
+  </Styles.Resources>
+
+  <Style Selector="TextBlock.heading">
+    <Setter Property="FontSize" Value="20" />
+    <Setter Property="FontWeight" Value="SemiBold" />
+    <Setter Property="Foreground" Value="{DynamicResource AccentForeground}" />
+  </Style>
+
+  <Style Selector="TextBlock.subheading">
+    <Setter Property="FontSize" Value="14" />
+    <Setter Property="Opacity" Value="0.75" />
+  </Style>
+
+  <Style Selector="Button.sidebar">
+    <Setter Property="HorizontalAlignment" Value="Stretch" />
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="BorderThickness" Value="0" />
+    <Setter Property="Padding" Value="12 10" />
+  </Style>
+</Styles>
+

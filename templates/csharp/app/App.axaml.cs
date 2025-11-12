@@ -1,6 +1,8 @@
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
+using AvaloniaAppTemplate.Services;
+using AvaloniaAppTemplate.ViewModels;
 
 namespace AvaloniaAppTemplate;
 
@@ -15,7 +17,11 @@ public partial class App : Application
     {
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
-            desktop.MainWindow = new MainWindow();
+            var metadata = AppConfigurationLoader.Load();
+            desktop.MainWindow = new MainWindow
+            {
+                DataContext = new ShellViewModel(metadata)
+            };
         }
 
         base.OnFrameworkInitializationCompleted();

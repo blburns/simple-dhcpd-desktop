@@ -19,7 +19,7 @@ A cross-platform desktop starter built with [Avalonia UI](https://avaloniaui.net
 - `Services/`: lightweight configuration loader with Avalonia asset support.
 - `Resources/Styles/`: Fluent-inspired resource dictionaries for branding and spacing.
 - `Assets/`: configuration and future static assets (icons, images, etc.).
-- `templates/`: snapshot of the upstream `avalonia.app` template from AvaloniaUI for reference/customisation.
+- `templates/`: customized `dotnet new` template that packages this boilerplate (metadata sourced from the upstream `avalonia.app` template).
 
 ## Getting Started
 

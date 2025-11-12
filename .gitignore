@@ -1,0 +1,38 @@
+.DS_Store
+bin/
+obj/
+/packages/
+*.user
+*.swp
+*.suo
+*.userprefs
+*.orig
+*.log
+*.lock.json
+*.ide/
+.vs/
+.idea/
+.ionide/
+GeneratedFiles/
+TestResults/
+artifacts/
+**/pkg/
+**/AppPackages/
+**/BundleArtifacts/
+**/BundleResources/
+**/bundle/
+**/dist/
+**/publish/
+
+# Avalonia build outputs
+**/BuildOutput/
+
+# Rider + JetBrains
+.fleet/
+.RiderLogs/
+
+# macOS code signing
+*.pfx
+*.p12
+
+

@@ -1,0 +1,94 @@
+{
+  "$schema": "http://json.schemastore.org/template",
+  "author": "AvaloniaUI",
+  "classifications": [ "Desktop", "Xaml", "Avalonia", "Windows", "Linux", "macOS" ],
+  "description": "A cross-platform Avalonia UI Application targeting Desktop",
+  "groupidentity": "Avalonia.App",
+  "identity": "Avalonia.App",
+  "name": "Avalonia .NET App",
+  "preferNameDirectory": true,
+  "shortName": "avalonia.app",
+  "sourceName": "AvaloniaAppTemplate",
+  "defaultName": "AvaloniaApplication",
+  "tags": {
+    "language": "C#",
+    "type": "project"
+  },
+  "symbols": {
+    "Framework": {
+      "type": "parameter",
+      "description": "The target framework for the project.",
+      "datatype": "choice",
+      "choices": [
+        {
+          "choice": "net8.0",
+          "description": "Target net8.0"
+        },
+        {
+          "choice": "net9.0",
+          "description": "Target net9.0"
+        }
+      ],
+      "replaces": "FrameworkParameter",
+      "defaultValue": "net9.0"
+    },
+    "skipRestore": {
+      "type": "parameter",
+      "datatype": "bool",
+      "description": "If specified, skips the automatic restore of the project on create.",
+      "defaultValue": "false"
+    },
+    "AvaloniaVersion": {
+      "type": "parameter",
+      "description": "The target version of Avalonia NuGet packages.",
+      "datatype": "text",
+      "replaces": "AvaloniaVersionTemplateParameter",
+      "defaultValue": "11.3.8"
+    },
+    "UseCompiledBindings": {
+      "type": "parameter",
+      "description": "Defines if CompiledBindings should be enabled by default in the project (only supported in 11.0 version and newer).",
+      "datatype": "bool",
+      "displayName": "Use compiled Bindings",
+      "defaultValue": "true"
+    },
+    "HostIdentifier": {
+      "type": "bind",
+      "binding": "HostIdentifier"
+    }
+  },
+  "primaryOutputs": [
+    { "path": "AvaloniaAppTemplate.csproj" },
+    {
+      "condition": "(HostIdentifier != \"dotnetcli\" && HostIdentifier != \"dotnetcli-preview\")",
+      "path": "MainWindow.axaml.cs"
+    },
+    {
+      "condition": "(HostIdentifier != \"dotnetcli\" && HostIdentifier != \"dotnetcli-preview\")",
+      "path": "MainWindow.axaml"
+    }
+  ],
+  "postActions": [
+    {
+      "id": "restore",
+      "condition": "(!skipRestore)",
+      "description": "Restore NuGet packages required by this project.",
+      "manualInstructions": [
+        { "text": "Run 'dotnet restore'" }
+      ],
+      "actionId": "210D431B-A78B-4D2F-B762-4ED3E3EA9025",
+      "continueOnError": true
+    },
+    {
+      "id": "editor",
+      "condition": "(HostIdentifier != \"dotnetcli\" && HostIdentifier != \"dotnetcli-preview\")",
+      "description": "Opens MainWindow in the editor",
+      "manualInstructions": [ ],
+      "actionId": "84C0DA21-51C8-4541-9940-6CA19AF04EE6",
+      "args": {
+        "files": "1;2"
+      },
+      "continueOnError": true
+    }
+  ]
+}

@@ -53,8 +53,9 @@
       </Grid>
     </Border>
 
-    <Grid Grid.Row="1" ColumnDefinitions="260,*">
-      <Border Background="{DynamicResource SidebarBackground}"
+    <Grid Grid.Row="1" ColumnDefinitions="260,Auto,*">
+      <Border Grid.Column="0"
+              Background="{DynamicResource SidebarBackground}"
               Padding="20 24 16 24">
         <StackPanel Spacing="12">
           <TextBlock Text="Navigation"
@@ -97,7 +98,15 @@
         </StackPanel>
       </Border>
 
-      <ScrollViewer Grid.Column="1"
+      <GridSplitter Grid.Column="1"
+                    Width="6"
+                    HorizontalAlignment="Center"
+                    Cursor="SizeWestEast"
+                    Background="Transparent"
+                    ResizeBehavior="PreviousAndNext"
+                    ResizeDirection="Columns" />
+
+      <ScrollViewer Grid.Column="2"
                     Padding="36"
                     Background="{DynamicResource AppBackground}">
         <StackPanel Spacing="24">

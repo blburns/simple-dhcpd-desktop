@@ -127,7 +127,7 @@
                     Grid.Row="0"
                     Background="{DynamicResource CardBackground}"
                     CornerRadius="{DynamicResource CornerRadiusMedium}"
-                    Padding="20">
+                    Padding="24">
               <StackPanel>
                 <TextBlock Text="Quick Start"
                            Classes="heading" />
@@ -140,7 +140,7 @@
                     Grid.Row="0"
                     Background="{DynamicResource CardBackground}"
                     CornerRadius="{DynamicResource CornerRadiusMedium}"
-                    Padding="20">
+                    Padding="24">
               <StackPanel>
                 <TextBlock Text="Recent Activity"
                            Classes="heading" />
@@ -153,7 +153,7 @@
                     Grid.Row="1"
                     Background="{DynamicResource CardBackground}"
                     CornerRadius="{DynamicResource CornerRadiusMedium}"
-                    Padding="20">
+                    Padding="24">
               <StackPanel>
                 <TextBlock Text="Integrations"
                            Classes="heading" />
@@ -166,7 +166,7 @@
                     Grid.Row="1"
                     Background="{DynamicResource CardBackground}"
                     CornerRadius="{DynamicResource CornerRadiusMedium}"
-                    Padding="20">
+                    Padding="24">
               <StackPanel>
                 <TextBlock Text="Next Steps"
                            Classes="heading" />

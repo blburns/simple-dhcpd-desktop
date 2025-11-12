@@ -83,7 +83,7 @@
                 <Grid ColumnDefinitions="Auto,*">
                   <TextBlock Text="{Binding Icon}"
                              FontSize="18"
-                             Margin="0,0,12,0"
+                             Margin="0,12,12,12"
                              VerticalAlignment="Center" />
                   <StackPanel>
                     <TextBlock Text="{Binding Title}"
@@ -122,8 +122,10 @@
             </StackPanel>
           </Border>
 
-          <UniformGrid Columns="2" Rows="2" ColumnSpacing="16" RowSpacing="16">
-            <Border Background="{DynamicResource CardBackground}"
+          <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto" ColumnSpacing="16" RowSpacing="16">
+            <Border Grid.Column="0"
+                    Grid.Row="0"
+                    Background="{DynamicResource CardBackground}"
                     CornerRadius="{DynamicResource CornerRadiusMedium}"
                     Padding="20">
               <StackPanel>
@@ -134,7 +136,9 @@
                            Margin="0,6,0,0" />
               </StackPanel>
             </Border>
-            <Border Background="{DynamicResource CardBackground}"
+            <Border Grid.Column="1"
+                    Grid.Row="0"
+                    Background="{DynamicResource CardBackground}"
                     CornerRadius="{DynamicResource CornerRadiusMedium}"
                     Padding="20">
               <StackPanel>
@@ -145,7 +149,9 @@
                            Margin="0,6,0,0" />
               </StackPanel>
             </Border>
-            <Border Background="{DynamicResource CardBackground}"
+            <Border Grid.Column="0"
+                    Grid.Row="1"
+                    Background="{DynamicResource CardBackground}"
                     CornerRadius="{DynamicResource CornerRadiusMedium}"
                     Padding="20">
               <StackPanel>
@@ -156,7 +162,9 @@
                            Margin="0,6,0,0" />
               </StackPanel>
             </Border>
-            <Border Background="{DynamicResource CardBackground}"
+            <Border Grid.Column="1"
+                    Grid.Row="1"
+                    Background="{DynamicResource CardBackground}"
                     CornerRadius="{DynamicResource CornerRadiusMedium}"
                     Padding="20">
               <StackPanel>
@@ -167,7 +175,7 @@
                            Margin="0,6,0,0" />
               </StackPanel>
             </Border>
-          </UniformGrid>
+          </Grid>
         </StackPanel>
       </ScrollViewer>
     </Grid>

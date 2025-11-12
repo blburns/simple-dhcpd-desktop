@@ -43,10 +43,10 @@ public partial class ShellViewModel : ObservableObject
     private static IEnumerable<NavigationItem> BuildNavigation()
         => new[]
         {
-            new NavigationItem("home", "Overview", "Stay on top of key metrics and quick actions.", "\uE80F"),
-            new NavigationItem("library", "Library", "Browse your content and recent files.", "\uE8B7"),
-            new NavigationItem("activity", "Activity", "Review the latest events and notifications.", "\uE7F4"),
-            new NavigationItem("settings", "Settings", "Configure preferences and integrations.", "\uE713", false)
+            new NavigationItem("home", "Overview", "Stay on top of key metrics and quick actions."),
+            new NavigationItem("library", "Library", "Browse your content and recent files."),
+            new NavigationItem("activity", "Activity", "Review the latest events and notifications."),
+            new NavigationItem("settings", "Settings", "Configure preferences and integrations.", false)
         };
 }
 

@@ -81,7 +81,6 @@
               <DataTemplate x:DataType="models:NavigationItem">
                 <Grid ColumnDefinitions="Auto,*">
                   <TextBlock Text="{Binding Icon}"
-                             FontFamily="avares://Avalonia.Themes.Fluent/Assets/Fonts#Segoe Fluent Icons"
                              FontSize="18"
                              Margin="0,0,12,0"
                              VerticalAlignment="Center" />

@@ -1,0 +1,141 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="clr-namespace:SimpleDhcpdDesktop.App.ViewModels"
+        xmlns:models="clr-namespace:SimpleDhcpdDesktop.App.Models"
+        xmlns:views="clr-namespace:SimpleDhcpdDesktop.App.Views"
+        xmlns:converters="clr-namespace:SimpleDhcpdDesktop.App.Converters"
+        mc:Ignorable="d"
+        d:DesignWidth="1200"
+        d:DesignHeight="800"
+        x:Class="SimpleDhcpdDesktop.App.MainWindow"
+        x:DataType="vm:ShellViewModel"
+        Title="Simple DHCP Daemon Configuration"
+        Width="1200"
+        Height="800"
+        MinWidth="1000"
+        MinHeight="700"
+        Background="{DynamicResource AppBackground}">
+  <Window.Resources>
+    <converters:IsNotNullConverter x:Key="IsNotNullConverter" />
+    <converters:IsNullConverter x:Key="IsNullConverter" />
+    <converters:BoolToTextConverter x:Key="BoolToTextConverter" />
+    <converters:NavigationContentConverter x:Key="NavigationContentConverter" />
+  </Window.Resources>
+
+  <Design.DataContext>
+    <vm:ShellViewModel />
+  </Design.DataContext>
+
+  <Grid RowDefinitions="Auto,*">
+    <!-- Header -->
+    <Border Grid.Row="0"
+            Background="{DynamicResource SidebarBackground}"
+            Padding="24,16">
+      <Grid ColumnDefinitions="*,Auto">
+        <StackPanel>
+          <TextBlock Text="Simple DHCP Daemon Configuration"
+                     FontSize="20"
+                     FontWeight="SemiBold"
+                     Foreground="{DynamicResource AccentForeground}" />
+          <TextBlock Text="{Binding HeaderSubtitle}"
+                     FontSize="12"
+                     Opacity="0.75"
+                     Margin="0,2,0,0" />
+        </StackPanel>
+        <StackPanel Orientation="Horizontal"
+                    Grid.Column="1"
+                    Spacing="12"
+                    VerticalAlignment="Center">
+          <Button Content="Save"
+                  Command="{Binding Configuration.SaveConfigurationCommand}"
+                  IsEnabled="{Binding Configuration.HasUnsavedChanges}"
+                  Padding="16,8"
+                  MinWidth="80" />
+          <Button Content="Load"
+                  Command="{Binding Configuration.LoadConfigurationCommand}"
+                  Padding="16,8"
+                  MinWidth="80"
+                  Classes="secondary" />
+        </StackPanel>
+      </Grid>
+    </Border>
+
+    <!-- Main Content -->
+    <Grid Grid.Row="1" ColumnDefinitions="280,1,*">
+      <!-- Navigation Sidebar -->
+      <Border Grid.Column="0"
+              Background="{DynamicResource SidebarBackground}"
+              BorderBrush="{DynamicResource CardBackground}"
+              BorderThickness="0,0,1,0">
+        <StackPanel Margin="0,16,0,0">
+          <ListBox ItemsSource="{Binding NavigationItems}"
+                   SelectedItem="{Binding SelectedItem}"
+                   Background="Transparent"
+                   BorderThickness="0">
+            <ListBox.Styles>
+              <Style Selector="ListBoxItem">
+                <Setter Property="CornerRadius" Value="8" />
+                <Setter Property="Padding" Value="16,12" />
+                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                <Setter Property="Margin" Value="12,4" />
+                <Setter Property="Background" Value="Transparent" />
+              </Style>
+              <Style Selector="ListBoxItem:selected /template/ ContentPresenter">
+                <Setter Property="Background" Value="{DynamicResource BrandColor}" />
+                <Setter Property="CornerRadius" Value="8" />
+              </Style>
+              <Style Selector="ListBoxItem:selected">
+                <Setter Property="Foreground" Value="{DynamicResource AccentForeground}" />
+              </Style>
+              <Style Selector="ListBoxItem:pointerover /template/ ContentPresenter">
+                <Setter Property="Background" Value="{DynamicResource CardBackground}" />
+                <Setter Property="CornerRadius" Value="8" />
+              </Style>
+            </ListBox.Styles>
+
+            <ListBox.ItemTemplate>
+              <DataTemplate x:DataType="models:NavigationItem">
+                <Grid ColumnDefinitions="Auto,*">
+                  <TextBlock Text="{Binding Icon}"
+                             FontSize="20"
+                             Margin="0,0,12,0"
+                             VerticalAlignment="Center" />
+                  <StackPanel Grid.Column="1">
+                    <TextBlock Text="{Binding Title}"
+                               FontWeight="SemiBold"
+                               FontSize="14" />
+                    <TextBlock Text="{Binding Subtitle}"
+                               FontSize="11"
+                               Opacity="0.7"
+                               TextWrapping="Wrap"
+                               Margin="0,2,0,0" />
+                  </StackPanel>
+                </Grid>
+              </DataTemplate>
+            </ListBox.ItemTemplate>
+          </ListBox>
+        </StackPanel>
+      </Border>
+
+      <!-- Divider -->
+      <Rectangle Grid.Column="1"
+                 Fill="{DynamicResource CardBackground}" />
+
+      <!-- Content Area -->
+      <ScrollViewer Grid.Column="2"
+                    Padding="32"
+                    Background="{DynamicResource AppBackground}">
+        <ContentControl>
+          <ContentControl.Content>
+            <MultiBinding Converter="{StaticResource NavigationContentConverter}">
+              <Binding Path="SelectedItem.Id" />
+              <Binding Path="Configuration" />
+            </MultiBinding>
+          </ContentControl.Content>
+        </ContentControl>
+      </ScrollViewer>
+    </Grid>
+  </Grid>
+</Window>

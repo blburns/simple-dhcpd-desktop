@@ -1,0 +1,15 @@
+<Application xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:converters="clr-namespace:SimpleDhcpdDesktop.App.Converters"
+             x:Class="SimpleDhcpdDesktop.App.App"
+             RequestedThemeVariant="Default">
+  <Application.Resources>
+    <converters:IsNotNullConverter x:Key="IsNotNullConverter" />
+    <converters:IsNullConverter x:Key="IsNullConverter" />
+    <converters:BoolToTextConverter x:Key="BoolToTextConverter" />
+  </Application.Resources>
+  <Application.Styles>
+    <FluentTheme />
+    <StyleInclude Source="avares://SimpleDhcpdDesktop.App/Resources/Styles/Styles.axaml" />
+  </Application.Styles>
+</Application>

@@ -1,0 +1,125 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="clr-namespace:SimpleDhcpdDesktop.App.ViewModels"
+             x:Class="SimpleDhcpdDesktop.App.Views.SubnetsView"
+             x:DataType="vm:MainConfigurationViewModel">
+  <Grid ColumnDefinitions="300,*" ColumnSpacing="16">
+    <Border Grid.Column="0"
+            Background="{DynamicResource CardBackground}"
+            CornerRadius="{DynamicResource CornerRadiusMedium}"
+            Padding="16">
+      <StackPanel Spacing="12">
+        <Grid ColumnDefinitions="*,Auto">
+          <TextBlock Text="Subnets"
+                     Classes="heading"
+                     Grid.Column="0" />
+          <Button Content="+"
+                  Command="{Binding Subnets.AddSubnetCommand}"
+                  Width="36"
+                  Height="36"
+                  Grid.Column="1"
+                  Padding="0"
+                  FontSize="20" />
+        </Grid>
+
+        <ListBox ItemsSource="{Binding Subnets.Subnets}"
+                 SelectedItem="{Binding Subnets.SelectedSubnet}"
+                 Margin="0,8,0,0"
+                 BorderThickness="0"
+                 Background="Transparent">
+          <ListBox.ItemTemplate>
+            <DataTemplate x:DataType="vm:SubnetViewModel">
+              <Border Padding="12,8"
+                      CornerRadius="4"
+                      Background="{DynamicResource SidebarBackground}">
+                <TextBlock Text="{Binding Name, FallbackValue=Unnamed Subnet}"
+                           TextWrapping="Wrap" />
+              </Border>
+            </DataTemplate>
+          </ListBox.ItemTemplate>
+        </ListBox>
+      </StackPanel>
+    </Border>
+
+    <ScrollViewer Grid.Column="1">
+      <StackPanel Spacing="24">
+        <Border Background="{DynamicResource CardBackground}"
+                CornerRadius="{DynamicResource CornerRadiusMedium}"
+                Padding="24"
+                IsVisible="{Binding Subnets.SelectedSubnet, Converter={StaticResource IsNotNullConverter}}">
+          <StackPanel Spacing="20">
+            <TextBlock Text="Subnet Configuration"
+                       Classes="heading" />
+
+            <Grid ColumnDefinitions="180,*" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto" RowSpacing="16">
+              <TextBlock Text="Name:"
+                         Grid.Row="0" Grid.Column="0"
+                         VerticalAlignment="Center" />
+              <TextBox Text="{Binding Subnets.SelectedSubnet.Name}"
+                       Grid.Row="0" Grid.Column="1"
+                       Watermark="Subnet name" />
+
+              <TextBlock Text="Network:"
+                         Grid.Row="1" Grid.Column="0"
+                         VerticalAlignment="Center" />
+              <TextBox Text="{Binding Subnets.SelectedSubnet.Network}"
+                       Grid.Row="1" Grid.Column="1"
+                       Watermark="192.168.1.0/24" />
+
+              <TextBlock Text="Range:"
+                         Grid.Row="2" Grid.Column="0"
+                         VerticalAlignment="Center" />
+              <TextBox Text="{Binding Subnets.SelectedSubnet.Range}"
+                       Grid.Row="2" Grid.Column="1"
+                       Watermark="192.168.1.100-192.168.1.200" />
+
+              <TextBlock Text="Gateway:"
+                         Grid.Row="3" Grid.Column="0"
+                         VerticalAlignment="Center" />
+              <TextBox Text="{Binding Subnets.SelectedSubnet.Gateway}"
+                       Grid.Row="3" Grid.Column="1"
+                       Watermark="192.168.1.1" />
+
+              <TextBlock Text="DNS Servers:"
+                         Grid.Row="4" Grid.Column="0"
+                         VerticalAlignment="Center" />
+              <TextBox Text="{Binding Subnets.SelectedSubnet.DnsServersText}"
+                       Grid.Row="4" Grid.Column="1"
+                       Watermark="8.8.8.8, 8.8.4.4" />
+
+              <TextBlock Text="Domain Name:"
+                         Grid.Row="5" Grid.Column="0"
+                         VerticalAlignment="Center" />
+              <TextBox Text="{Binding Subnets.SelectedSubnet.DomainName}"
+                       Grid.Row="5" Grid.Column="1"
+                       Watermark="local" />
+
+              <TextBlock Text="Lease Time (seconds):"
+                         Grid.Row="6" Grid.Column="0"
+                         VerticalAlignment="Center" />
+              <NumericUpDown Value="{Binding Subnets.SelectedSubnet.LeaseTime}"
+                            Grid.Row="6" Grid.Column="1"
+                            Minimum="60"
+                            Maximum="2147483647" />
+            </Grid>
+          </StackPanel>
+        </Border>
+
+        <Border Background="{DynamicResource CardBackground}"
+                CornerRadius="{DynamicResource CornerRadiusMedium}"
+                Padding="24"
+                IsVisible="{Binding Subnets.SelectedSubnet, Converter={StaticResource IsNullConverter}}">
+          <StackPanel Spacing="12" HorizontalAlignment="Center">
+            <TextBlock Text="📋"
+                       FontSize="48"
+                       HorizontalAlignment="Center" />
+            <TextBlock Text="Select a subnet from the list to configure it."
+                       Classes="subheading"
+                       HorizontalAlignment="Center"
+                       TextAlignment="Center" />
+          </StackPanel>
+        </Border>
+      </StackPanel>
+    </ScrollViewer>
+  </Grid>
+</UserControl>

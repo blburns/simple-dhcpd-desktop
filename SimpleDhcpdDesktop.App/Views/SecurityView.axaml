@@ -1,0 +1,145 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="clr-namespace:SimpleDhcpdDesktop.App.ViewModels"
+             x:Class="SimpleDhcpdDesktop.App.Views.SecurityView"
+             x:DataType="vm:MainConfigurationViewModel">
+  <ScrollViewer>
+    <StackPanel Spacing="24">
+      <Border Background="{DynamicResource CardBackground}"
+              CornerRadius="{DynamicResource CornerRadiusMedium}"
+              Padding="24">
+        <StackPanel Spacing="20">
+          <TextBlock Text="Security Settings"
+                     Classes="heading" />
+          <CheckBox Content="Enable Security Features"
+                    IsChecked="{Binding Security.Enable}" />
+        </StackPanel>
+      </Border>
+
+      <Border Background="{DynamicResource CardBackground}"
+              CornerRadius="{DynamicResource CornerRadiusMedium}"
+              Padding="24">
+        <StackPanel Spacing="16">
+          <TextBlock Text="DHCP Snooping"
+                     Classes="heading" />
+          <CheckBox Content="Enabled"
+                    IsChecked="{Binding Security.DhcpSnoopingEnabled}"
+                    Margin="0,8,0,0" />
+          <TextBox Text="{Binding Security.TrustedInterfacesText}"
+                   Watermark="eth0, eth1"
+                   Margin="0,8,0,0" />
+          <TextBlock Text="Trusted interfaces (comma-separated)"
+                     Classes="subheading"
+                     Margin="0,4,0,0" />
+          <CheckBox Content="Enable Logging"
+                    IsChecked="{Binding Security.DhcpSnoopingLogging}"
+                    Margin="0,8,0,0" />
+          <CheckBox Content="Enable Validation"
+                    IsChecked="{Binding Security.DhcpSnoopingValidation}"
+                    Margin="0,8,0,0" />
+        </StackPanel>
+      </Border>
+
+      <Border Background="{DynamicResource CardBackground}"
+              CornerRadius="{DynamicResource CornerRadiusMedium}"
+              Padding="24">
+        <StackPanel Spacing="16">
+          <TextBlock Text="MAC Address Filtering"
+                     Classes="heading" />
+          <CheckBox Content="Enabled"
+                    IsChecked="{Binding Security.MacFilteringEnabled}"
+                    Margin="0,8,0,0" />
+          <ComboBox SelectedItem="{Binding Security.MacFilteringMode}"
+                    Margin="0,8,0,0">
+            <ComboBoxItem Content="Allow" />
+            <ComboBoxItem Content="Deny" />
+          </ComboBox>
+          <TextBlock Text="Mode"
+                     Classes="subheading"
+                     Margin="0,4,0,0" />
+        </StackPanel>
+      </Border>
+
+      <Border Background="{DynamicResource CardBackground}"
+              CornerRadius="{DynamicResource CornerRadiusMedium}"
+              Padding="24">
+        <StackPanel Spacing="16">
+          <TextBlock Text="IP Address Filtering"
+                     Classes="heading" />
+          <CheckBox Content="Enabled"
+                    IsChecked="{Binding Security.IpFilteringEnabled}"
+                    Margin="0,8,0,0" />
+          <ComboBox SelectedItem="{Binding Security.IpFilteringMode}"
+                    Margin="0,8,0,0">
+            <ComboBoxItem Content="Allow" />
+            <ComboBoxItem Content="Deny" />
+          </ComboBox>
+        </StackPanel>
+      </Border>
+
+      <Border Background="{DynamicResource CardBackground}"
+              CornerRadius="{DynamicResource CornerRadiusMedium}"
+              Padding="24">
+        <StackPanel Spacing="16">
+          <TextBlock Text="Rate Limiting"
+                     Classes="heading" />
+          <CheckBox Content="Enabled"
+                    IsChecked="{Binding Security.RateLimitingEnabled}"
+                    Margin="0,8,0,0" />
+        </StackPanel>
+      </Border>
+
+      <Border Background="{DynamicResource CardBackground}"
+              CornerRadius="{DynamicResource CornerRadiusMedium}"
+              Padding="24">
+        <StackPanel Spacing="16">
+          <TextBlock Text="Option 82"
+                     Classes="heading" />
+          <CheckBox Content="Enabled"
+                    IsChecked="{Binding Security.Option82Enabled}"
+                    Margin="0,8,0,0" />
+          <CheckBox Content="Enable Validation"
+                    IsChecked="{Binding Security.Option82Validation}"
+                    Margin="0,8,0,0" />
+        </StackPanel>
+      </Border>
+
+      <Border Background="{DynamicResource CardBackground}"
+              CornerRadius="{DynamicResource CornerRadiusMedium}"
+              Padding="24">
+        <StackPanel Spacing="16">
+          <TextBlock Text="Authentication"
+                     Classes="heading" />
+          <CheckBox Content="Enabled"
+                    IsChecked="{Binding Security.AuthenticationEnabled}"
+                    Margin="0,8,0,0" />
+          <TextBox Text="{Binding Security.AuthenticationKey}"
+                   Watermark="Secret key"
+                   Margin="0,8,0,0" />
+        </StackPanel>
+      </Border>
+
+      <Border Background="{DynamicResource CardBackground}"
+              CornerRadius="{DynamicResource CornerRadiusMedium}"
+              Padding="24">
+        <StackPanel Spacing="16">
+          <TextBlock Text="Security Events"
+                     Classes="heading" />
+          <CheckBox Content="Enable Logging"
+                    IsChecked="{Binding Security.SecurityEventsEnableLogging}"
+                    Margin="0,8,0,0" />
+          <TextBox Text="{Binding Security.SecurityEventsLogFile}"
+                   Watermark="/var/log/simple-dhcpd/security.log"
+                   Margin="0,8,0,0" />
+          <NumericUpDown Value="{Binding Security.SecurityEventsRetentionDays}"
+                        Minimum="1"
+                        Maximum="365"
+                        Margin="0,8,0,0" />
+          <TextBlock Text="Retention Days"
+                     Classes="subheading"
+                     Margin="0,4,0,0" />
+        </StackPanel>
+      </Border>
+    </StackPanel>
+  </ScrollViewer>
+</UserControl>

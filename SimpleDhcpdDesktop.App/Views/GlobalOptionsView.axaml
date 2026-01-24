@@ -1,0 +1,54 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="clr-namespace:SimpleDhcpdDesktop.App.ViewModels"
+             x:Class="SimpleDhcpdDesktop.App.Views.GlobalOptionsView"
+             x:DataType="vm:MainConfigurationViewModel">
+  <StackPanel Spacing="24">
+    <Border Background="{DynamicResource CardBackground}"
+            CornerRadius="{DynamicResource CornerRadiusMedium}"
+            Padding="24">
+      <StackPanel Spacing="20">
+        <Grid ColumnDefinitions="*,Auto">
+          <StackPanel>
+            <TextBlock Text="Global DHCP Options"
+                       Classes="heading" />
+            <TextBlock Text="Configure global DHCP options that apply to all subnets."
+                       Classes="subheading"
+                       TextWrapping="Wrap"
+                       Margin="0,4,0,0" />
+          </StackPanel>
+          <Button Content="Add Option"
+                  Command="{Binding GlobalOptions.AddOptionCommand}"
+                  Grid.Column="1"
+                  VerticalAlignment="Top" />
+        </Grid>
+
+        <ItemsControl ItemsSource="{Binding GlobalOptions.Options}"
+                      Margin="0,16,0,0">
+          <ItemsControl.ItemTemplate>
+            <DataTemplate x:DataType="vm:DhcpOptionViewModel">
+              <Border Background="{DynamicResource SidebarBackground}"
+                      CornerRadius="{DynamicResource CornerRadiusSmall}"
+                      Padding="16"
+                      Margin="0,0,0,12">
+                <Grid ColumnDefinitions="*,*,Auto" ColumnSpacing="12">
+                  <TextBox Text="{Binding Name}"
+                           Watermark="Option name"
+                           Grid.Column="0" />
+                  <TextBox Text="{Binding Value}"
+                           Watermark="Option value"
+                           Grid.Column="1" />
+                  <Button Content="Remove"
+                          Command="{Binding $parent[ItemsControl].(vm:GlobalOptionsViewModel).RemoveOptionCommand}"
+                          CommandParameter="{Binding}"
+                          Grid.Column="2"
+                          Classes="secondary" />
+                </Grid>
+              </Border>
+            </DataTemplate>
+          </ItemsControl.ItemTemplate>
+        </ItemsControl>
+      </StackPanel>
+    </Border>
+  </StackPanel>
+</UserControl>

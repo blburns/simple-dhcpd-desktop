@@ -1,0 +1,46 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="clr-namespace:SimpleDhcpdDesktop.App.ViewModels"
+             x:Class="SimpleDhcpdDesktop.App.Views.ServerSettingsView"
+             x:DataType="vm:MainConfigurationViewModel">
+  <StackPanel Spacing="24">
+    <Border Background="{DynamicResource CardBackground}"
+            CornerRadius="{DynamicResource CornerRadiusMedium}"
+            Padding="24">
+      <StackPanel Spacing="20">
+        <TextBlock Text="Listen Addresses"
+                   Classes="heading" />
+        <TextBlock Text="Configure the network addresses and ports the DHCP server will listen on."
+                   Classes="subheading"
+                   TextWrapping="Wrap"
+                   Margin="0,4,0,20" />
+
+        <ListBox ItemsSource="{Binding ServerSettings.ListenAddresses}"
+                 BorderThickness="0"
+                 Background="Transparent">
+          <ListBox.ItemTemplate>
+            <DataTemplate>
+              <Grid ColumnDefinitions="*,Auto" Margin="0,0,0,8">
+                <TextBox Text="{Binding}"
+                         Watermark="0.0.0.0:67"
+                         Grid.Column="0" />
+                <Button Content="Remove"
+                        Grid.Column="1"
+                        Margin="8,0,0,0"
+                        Padding="12,6"
+                        Classes="secondary"
+                        Click="RemoveButton_Click" />
+              </Grid>
+            </DataTemplate>
+          </ListBox.ItemTemplate>
+        </ListBox>
+
+        <Button Content="Add Listen Address"
+                Command="{Binding ServerSettings.AddListenAddressCommand}"
+                HorizontalAlignment="Left"
+                Padding="16,8"
+                Margin="0,8,0,0" />
+      </StackPanel>
+    </Border>
+  </StackPanel>
+</UserControl>

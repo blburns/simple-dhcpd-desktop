@@ -1,0 +1,67 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="clr-namespace:SimpleDhcpdDesktop.App.ViewModels"
+             x:Class="SimpleDhcpdDesktop.App.Views.PerformanceView"
+             x:DataType="vm:MainConfigurationViewModel">
+  <StackPanel Spacing="24">
+    <Border Background="{DynamicResource CardBackground}"
+            CornerRadius="{DynamicResource CornerRadiusMedium}"
+            Padding="24">
+      <StackPanel Spacing="20">
+        <TextBlock Text="Performance Settings"
+                   Classes="heading" />
+        <TextBlock Text="Configure performance and lease database settings."
+                   Classes="subheading"
+                   TextWrapping="Wrap"
+                   Margin="0,4,0,16" />
+
+        <Grid ColumnDefinitions="200,*" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto" RowSpacing="16">
+          <TextBlock Text="Max Leases:"
+                     Grid.Row="0" Grid.Column="0"
+                     VerticalAlignment="Center" />
+          <NumericUpDown Value="{Binding Performance.MaxLeases}"
+                        Grid.Row="0" Grid.Column="1"
+                        Minimum="1"
+                        Maximum="1000000" />
+
+          <TextBlock Text="Database Type:"
+                     Grid.Row="1" Grid.Column="0"
+                     VerticalAlignment="Center" />
+          <TextBox Text="{Binding Performance.LeaseDatabaseType}"
+                   Grid.Row="1" Grid.Column="1"
+                   Watermark="file" />
+
+          <TextBlock Text="Database Path:"
+                     Grid.Row="2" Grid.Column="0"
+                     VerticalAlignment="Center" />
+          <TextBox Text="{Binding Performance.LeaseDatabasePath}"
+                   Grid.Row="2" Grid.Column="1"
+                   Watermark="/var/lib/simple-dhcpd/leases.db" />
+
+          <TextBlock Text="Enable Backup:"
+                     Grid.Row="3" Grid.Column="0"
+                     VerticalAlignment="Center" />
+          <CheckBox IsChecked="{Binding Performance.LeaseDatabaseBackup}"
+                   Grid.Row="3" Grid.Column="1"
+                   HorizontalAlignment="Left" />
+
+          <TextBlock Text="Backup Interval (seconds):"
+                     Grid.Row="4" Grid.Column="0"
+                     VerticalAlignment="Center" />
+          <NumericUpDown Value="{Binding Performance.LeaseDatabaseBackupInterval}"
+                        Grid.Row="4" Grid.Column="1"
+                        Minimum="60"
+                        Maximum="86400" />
+
+          <TextBlock Text="Backup Retention (days):"
+                     Grid.Row="5" Grid.Column="0"
+                     VerticalAlignment="Center" />
+          <NumericUpDown Value="{Binding Performance.LeaseDatabaseBackupRetention}"
+                        Grid.Row="5" Grid.Column="1"
+                        Minimum="1"
+                        Maximum="365" />
+        </Grid>
+      </StackPanel>
+    </Border>
+  </StackPanel>
+</UserControl>

@@ -1,0 +1,79 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="clr-namespace:SimpleDhcpdDesktop.App.ViewModels"
+             x:Class="SimpleDhcpdDesktop.App.Views.LoggingView"
+             x:DataType="vm:MainConfigurationViewModel">
+  <StackPanel Spacing="24">
+    <Border Background="{DynamicResource CardBackground}"
+            CornerRadius="{DynamicResource CornerRadiusMedium}"
+            Padding="24">
+      <StackPanel Spacing="20">
+        <TextBlock Text="Logging Settings"
+                   Classes="heading" />
+        <TextBlock Text="Configure logging behavior and output."
+                   Classes="subheading"
+                   TextWrapping="Wrap"
+                   Margin="0,4,0,16" />
+
+        <Grid ColumnDefinitions="200,*" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto" RowSpacing="16">
+          <TextBlock Text="Enable Logging:"
+                     Grid.Row="0" Grid.Column="0"
+                     VerticalAlignment="Center" />
+          <CheckBox IsChecked="{Binding Logging.Enable}"
+                   Grid.Row="0" Grid.Column="1"
+                   HorizontalAlignment="Left" />
+
+          <TextBlock Text="Log Level:"
+                     Grid.Row="1" Grid.Column="0"
+                     VerticalAlignment="Center" />
+          <ComboBox SelectedItem="{Binding Logging.Level}"
+                   Grid.Row="1" Grid.Column="1">
+            <ComboBoxItem Content="Debug" />
+            <ComboBoxItem Content="Info" />
+            <ComboBoxItem Content="Warning" />
+            <ComboBoxItem Content="Error" />
+          </ComboBox>
+
+          <TextBlock Text="Log File:"
+                     Grid.Row="2" Grid.Column="0"
+                     VerticalAlignment="Center" />
+          <TextBox Text="{Binding Logging.LogFile}"
+                   Grid.Row="2" Grid.Column="1"
+                   Watermark="/var/log/simple-dhcpd.log" />
+
+          <TextBlock Text="Format:"
+                     Grid.Row="3" Grid.Column="0"
+                     VerticalAlignment="Center" />
+          <ComboBox SelectedItem="{Binding Logging.Format}"
+                   Grid.Row="3" Grid.Column="1">
+            <ComboBoxItem Content="json" />
+            <ComboBoxItem Content="text" />
+            <ComboBoxItem Content="standard" />
+          </ComboBox>
+
+          <TextBlock Text="Enable Rotation:"
+                     Grid.Row="4" Grid.Column="0"
+                     VerticalAlignment="Center" />
+          <CheckBox IsChecked="{Binding Logging.Rotation}"
+                   Grid.Row="4" Grid.Column="1"
+                   HorizontalAlignment="Left" />
+
+          <TextBlock Text="Max Size:"
+                     Grid.Row="5" Grid.Column="0"
+                     VerticalAlignment="Center" />
+          <TextBox Text="{Binding Logging.MaxSize}"
+                   Grid.Row="5" Grid.Column="1"
+                   Watermark="100MB" />
+
+          <TextBlock Text="Max Files:"
+                     Grid.Row="6" Grid.Column="0"
+                     VerticalAlignment="Center" />
+          <NumericUpDown Value="{Binding Logging.MaxFiles}"
+                        Grid.Row="6" Grid.Column="1"
+                        Minimum="1"
+                        Maximum="100" />
+        </Grid>
+      </StackPanel>
+    </Border>
+  </StackPanel>
+</UserControl>

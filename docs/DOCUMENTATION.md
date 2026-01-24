@@ -115,7 +115,7 @@ This will automatically rebuild and restart the application when you make change
 
 ### Running from Visual Studio / Rider
 
-1. Open `DesktopBoilerplate.sln` in your IDE
+1. Open `DesktopBoilerplate.sln` (or the solution file) in your IDE
 2. Set `SimpleDhcpdDesktop.App` as the startup project
 3. Press F5 or click Run
 

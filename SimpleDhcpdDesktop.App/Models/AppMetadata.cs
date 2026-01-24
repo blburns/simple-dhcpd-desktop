@@ -13,8 +13,8 @@ public sealed record AppMetadata(
 {
     public static AppMetadata FromAssembly(Assembly assembly, AppMetadata? overrides = null)
     {
-        var name = overrides?.Name ?? assembly.GetName().Name ?? "Desktop Boilerplate";
-        var company = overrides?.Company ?? "Dreamlike Labs";
+        var name = overrides?.Name ?? assembly.GetName().Name ?? "Simple DHCP - Desktop App";
+        var company = overrides?.Company ?? "SimpleDaemons";
         var description = overrides?.Description ?? "Starter shell for cross-platform desktop apps.";
         var repositoryUrl = overrides?.RepositoryUrl ?? string.Empty;
         var documentationUrl = overrides?.DocumentationUrl ?? string.Empty;

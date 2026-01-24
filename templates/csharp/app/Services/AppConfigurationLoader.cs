@@ -32,7 +32,7 @@ public static class AppConfigurationLoader
 
             var metadata = new AppMetadata(
                 appElement.GetPropertyOrDefault("Name", "Desktop Boilerplate"),
-                appElement.GetPropertyOrDefault("Company", "Contoso Labs"),
+                appElement.GetPropertyOrDefault("Company", "Dreamlike Labs"),
                 appElement.GetPropertyOrDefault("Description", "Starter shell for cross-platform desktop apps."),
                 appElement.GetPropertyOrDefault("RepositoryUrl", string.Empty),
                 appElement.GetPropertyOrDefault("DocumentationUrl", string.Empty),

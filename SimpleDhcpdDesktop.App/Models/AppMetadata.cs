@@ -14,7 +14,7 @@ public sealed record AppMetadata(
     public static AppMetadata FromAssembly(Assembly assembly, AppMetadata? overrides = null)
     {
         var name = overrides?.Name ?? assembly.GetName().Name ?? "Desktop Boilerplate";
-        var company = overrides?.Company ?? "Contoso Labs";
+        var company = overrides?.Company ?? "Dreamlike Labs";
         var description = overrides?.Description ?? "Starter shell for cross-platform desktop apps.";
         var repositoryUrl = overrides?.RepositoryUrl ?? string.Empty;
         var documentationUrl = overrides?.DocumentationUrl ?? string.Empty;

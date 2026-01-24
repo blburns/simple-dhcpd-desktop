@@ -1,9 +1,0 @@
-<Application xmlns="https://github.com/avaloniaui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             x:Class="DesktopBoilerplate.App.App"
-             RequestedThemeVariant="Default">
-  <Application.Styles>
-    <FluentTheme />
-    <StyleInclude Source="avares://DesktopBoilerplate.App/Resources/Styles/Styles.axaml" />
-  </Application.Styles>
-</Application>

@@ -2,6 +2,13 @@
 
 A cross-platform desktop starter built with [Avalonia UI](https://avaloniaui.net/) and .NET 8. The layout and project structure are opinionated toward productivity apps like Spotify, VS Code, or Slack—complete with navigation, theming, and platform-aware helpers.
 
+> 📖 **For comprehensive documentation, see [docs/DOCUMENTATION.md](./docs/DOCUMENTATION.md)**
+
+## Prerequisites
+
+- **.NET 8 SDK** or later ([Download](https://dotnet.microsoft.com/download))
+- Verify installation: `dotnet --version` (should show 8.0.x or later)
+
 ## Features
 
 - **True cross platform**: single `net8.0` target with runtime identifiers for Windows, macOS (Intel + Apple Silicon), and Linux (x64/ARM64).
@@ -21,13 +28,20 @@ A cross-platform desktop starter built with [Avalonia UI](https://avaloniaui.net
 - `Assets/`: configuration and future static assets (icons, images, etc.).
 - `templates/`: customized `dotnet new` template that packages this boilerplate (metadata sourced from the upstream `avalonia.app` template).
 
-## Getting Started
+## Quick Start
 
 ```bash
+# Restore dependencies
 dotnet restore
+
+# Build the project
 dotnet build
+
+# Run the application
 dotnet run --project DesktopBoilerplate.App
 ```
+
+> 💡 **Tip**: Use `dotnet watch --project DesktopBoilerplate.App` for hot reload during development
 
 ## Cross-platform publishing
 
@@ -60,6 +74,24 @@ Avalonia supports XAML Hot Reload along with `dotnet watch`:
 ```bash
 dotnet watch --project DesktopBoilerplate.App
 ```
+
+## Documentation
+
+For detailed information about:
+- Architecture and design patterns
+- Configuration options
+- Customization guide
+- Building and publishing
+- Troubleshooting
+
+See [docs/DOCUMENTATION.md](./docs/DOCUMENTATION.md)
+
+### Managing Multiple .NET SDK Versions
+
+If you have multiple .NET SDK versions installed, see [docs/SDK_MANAGEMENT.md](./docs/SDK_MANAGEMENT.md) for guidance on:
+- Selecting which SDK version to use
+- Using `global.json` to pin SDK versions
+- Troubleshooting SDK version issues
 
 ## License
 

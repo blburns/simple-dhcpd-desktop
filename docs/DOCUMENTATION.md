@@ -1,10 +1,16 @@
-# Desktop Boilerplate Application Documentation
+# Simple DHCP Daemon Desktop Application Documentation
 
 ## Overview
 
-Desktop Boilerplate is a cross-platform desktop application starter template built with [Avalonia UI](https://avaloniaui.net/) and .NET 8. It provides a modern, production-ready foundation for building desktop applications that run on Windows, macOS (Intel + Apple Silicon), and Linux.
+Simple DHCP Daemon Desktop Application is a cross-platform desktop configuration tool for the [Simple DHCP Daemon](https://github.com/simpledaemons/simple-dhcpd) built with [Avalonia UI](https://avaloniaui.net/) and .NET 8. It provides a modern, intuitive graphical interface for configuring all aspects of the DHCP server on Windows, macOS (Intel + Apple Silicon), and Linux.
 
-The application features a clean, modern UI inspired by productivity applications like Spotify, VS Code, and Slack, with a navigation sidebar, theming system, and platform-aware utilities.
+The application features a clean, modern UI with comprehensive configuration management for:
+- Server settings and listen addresses
+- Subnet configuration with IP ranges, reservations, and exclusions
+- Global DHCP options
+- Security settings (snooping, filtering, rate limiting, authentication)
+- Performance and lease database configuration
+- Logging configuration
 
 ## Table of Contents
 
@@ -14,7 +20,6 @@ The application features a clean, modern UI inspired by productivity application
 - [Architecture](#architecture)
 - [Project Structure](#project-structure)
 - [Configuration](#configuration)
-- [Customization](#customization)
 - [Building and Publishing](#building-and-publishing)
 - [Development Workflow](#development-workflow)
 - [Troubleshooting](#troubleshooting)
@@ -27,7 +32,11 @@ Before running this application, ensure you have the following installed:
    - Download from: https://dotnet.microsoft.com/download
    - Verify installation: `dotnet --version` (should show 8.0.x or later)
 
-2. **Platform-specific requirements:**
+2. **Simple DHCP Daemon** (optional, for testing)
+   - The desktop app can configure the daemon even if it's not currently running
+   - See [Simple DHCP Daemon repository](https://github.com/simpledaemons/simple-dhcpd) for installation
+
+3. **Platform-specific requirements:**
    - **Windows**: Windows 10/11 (x64, x86, or ARM64)
    - **macOS**: macOS 10.15 or later (Intel or Apple Silicon)
    - **Linux**: Modern Linux distribution with GTK3 or Wayland support
@@ -66,24 +75,12 @@ If you have multiple .NET SDK versions installed, you can control which one is u
    }
    ```
 
-4. **Override SDK version (temporarily):**
-   ```bash
-   # Use a specific SDK version for a single command
-   DOTNET_ROOT=/path/to/specific/sdk dotnet build
-   ```
-
-5. **Install additional SDK versions:**
-   - Download from: https://dotnet.microsoft.com/download
-   - Or use package managers:
-     - **macOS**: `brew install dotnet@8`
-     - **Windows**: Use the installer
-     - **Linux**: Use distribution-specific package managers
-
 ## Installation
 
 1. **Clone or navigate to the project directory:**
    ```bash
-   cd /path/to/csharp-desktop-app
+   git clone https://github.com/simpledaemons/simple-dhcpd-desktop.git
+   cd simple-dhcpd-desktop
    ```
 
 2. **Restore dependencies:**
@@ -103,7 +100,7 @@ If you have multiple .NET SDK versions installed, you can control which one is u
 Run the application in development mode:
 
 ```bash
-dotnet run --project DesktopBoilerplate.App
+dotnet run --project SimpleDhcpdDesktop.App
 ```
 
 ### Development with Hot Reload
@@ -111,7 +108,7 @@ dotnet run --project DesktopBoilerplate.App
 For a better development experience with XAML Hot Reload:
 
 ```bash
-dotnet watch --project DesktopBoilerplate.App
+dotnet watch --project SimpleDhcpdDesktop.App
 ```
 
 This will automatically rebuild and restart the application when you make changes to the code.
@@ -119,7 +116,7 @@ This will automatically rebuild and restart the application when you make change
 ### Running from Visual Studio / Rider
 
 1. Open `DesktopBoilerplate.sln` in your IDE
-2. Set `DesktopBoilerplate.App` as the startup project
+2. Set `SimpleDhcpdDesktop.App` as the startup project
 3. Press F5 or click Run
 
 ## Architecture
@@ -128,9 +125,9 @@ This will automatically rebuild and restart the application when you make change
 
 The application follows the Model-View-ViewModel (MVVM) pattern using `CommunityToolkit.Mvvm`:
 
-- **Models**: Data structures (`AppMetadata`, `NavigationItem`)
-- **Views**: XAML files (`MainWindow.axaml`, `App.axaml`)
-- **ViewModels**: Business logic and data binding (`ShellViewModel`)
+- **Models**: Data structures (`DhcpConfiguration`, `SubnetConfiguration`, `SecurityConfiguration`, etc.)
+- **Views**: XAML files (`MainWindow.axaml`, `ServerSettingsView.axaml`, `SubnetsView.axaml`, etc.)
+- **ViewModels**: Business logic and data binding (`MainConfigurationViewModel`, `ServerSettingsViewModel`, etc.)
 
 ### Key Components
 
@@ -146,37 +143,71 @@ The application follows the Model-View-ViewModel (MVVM) pattern using `Community
 
 #### Main Window (`MainWindow.axaml`)
 - Shell layout with header, navigation sidebar, and content area
-- Responsive design with resizable panels
-- Modern UI with acrylic blur effects
+- Dynamic view switching based on navigation selection
+- Modern UI with consistent styling and spacing
 
-#### Shell ViewModel (`ShellViewModel.cs`)
-- Manages navigation state
-- Handles commands for opening documentation, repository, and support
-- Loads application metadata from configuration
+#### Configuration Service (`DhcpConfigurationService.cs`)
+- Loads and saves DHCP configuration files
+- Handles platform-specific default paths
+- Supports elevated permissions for system directories
+
+#### Elevated File Service (`ElevatedFileService.cs`)
+- Detects when files require administrator privileges
+- Handles sudo password prompts on Unix systems
+- Cross-platform support for Windows (UAC) and Unix (sudo)
+
+#### ViewModels
+- `MainConfigurationViewModel`: Coordinates all configuration sections
+- `ServerSettingsViewModel`: Manages listen addresses
+- `SubnetsViewModel`: Handles subnet configuration
+- `GlobalOptionsViewModel`: Manages global DHCP options
+- `SecurityViewModel`: Handles all security settings
+- `PerformanceViewModel`: Performance configuration
+- `LoggingViewModel`: Logging configuration
 
 ## Project Structure
 
 ```
-DesktopBoilerplate.App/
+SimpleDhcpdDesktop.App/
 ├── App.axaml                    # Application-level XAML resources
 ├── App.axaml.cs                # Application initialization logic
 ├── Program.cs                   # Application entry point
 ├── MainWindow.axaml            # Main window layout
 ├── MainWindow.axaml.cs         # Main window code-behind
 ├── Assets/
-│   └── appsettings.json        # Application configuration
+│   └── appsettings.json        # Application metadata
 ├── Models/
 │   ├── AppMetadata.cs          # Application metadata model
-│   └── NavigationItem.cs       # Navigation item model
+│   ├── NavigationItem.cs       # Navigation item model
+│   └── DhcpConfiguration.cs    # DHCP configuration models
 ├── Services/
-│   └── AppConfigurationLoader.cs  # Configuration loading service
-├── Utilities/
-│   └── PlatformLauncher.cs    # Cross-platform URL/browser launcher
+│   ├── AppConfigurationLoader.cs  # Application config loading
+│   ├── DhcpConfigurationService.cs  # DHCP config file I/O
+│   └── ElevatedFileService.cs  # Elevated permissions handling
 ├── ViewModels/
-│   └── ShellViewModel.cs      # Main shell view model
+│   ├── ShellViewModel.cs       # Main shell view model
+│   ├── MainConfigurationViewModel.cs  # Main config coordinator
+│   ├── ServerSettingsViewModel.cs
+│   ├── SubnetsViewModel.cs
+│   ├── GlobalOptionsViewModel.cs
+│   ├── SecurityViewModel.cs
+│   ├── PerformanceViewModel.cs
+│   └── LoggingViewModel.cs
+├── Views/
+│   ├── OverviewView.axaml
+│   ├── ServerSettingsView.axaml
+│   ├── SubnetsView.axaml
+│   ├── GlobalOptionsView.axaml
+│   ├── SecurityView.axaml
+│   ├── PerformanceView.axaml
+│   ├── LoggingView.axaml
+│   └── PasswordDialog.axaml
+├── Converters/
+│   ├── ValueConverters.cs      # Value converters
+│   └── NavigationContentConverter.cs  # View switching
 └── Resources/
     └── Styles/
-        ├── Colors.axaml        # Color definitions
+        ├── Colors.axaml         # Color definitions
         └── Styles.axaml        # Global styles
 ```
 
@@ -184,22 +215,30 @@ DesktopBoilerplate.App/
 
 ### Application Settings
 
-Edit `Assets/appsettings.json` to customize your application:
+Edit `Assets/appsettings.json` to customize application metadata:
 
 ```json
 {
   "App": {
-    "Name": "Your App Name",
-    "Company": "Your Company",
-    "Description": "Your app description",
-    "RepositoryUrl": "https://github.com/your-org/your-repo",
-    "DocumentationUrl": "https://your-docs-url.com",
-    "SupportEmail": "support@yourcompany.com"
+    "Name": "Simple DHCP - Desktop App",
+    "Company": "SimpleDaemons",
+    "Description": "Simple DHCP - Desktop Application",
+    "RepositoryUrl": "https://github.com/simpledaemons/simple-dhcpd-desktop",
+    "DocumentationUrl": "https://github.com/simpledaemons/simple-dhcpd-desktop/blob/main/docs/DOCUMENTATION.md",
+    "SupportEmail": "support@simpledaemons.com"
   }
 }
 ```
 
-These settings are automatically loaded at startup and displayed in the application UI.
+### DHCP Configuration Files
+
+The application automatically detects the default configuration file location:
+
+- **Windows**: `C:\ProgramData\Simple DHCP Daemon\simple-dhcpd.conf`
+- **Linux**: `/etc/simple-dhcpd/simple-dhcpd.conf`
+- **macOS**: `/usr/local/etc/simple-dhcpd/simple-dhcpd.conf`
+
+When saving to system directories, the application will prompt for administrator/sudo password.
 
 ### Theming
 
@@ -221,86 +260,45 @@ Edit `Resources/Styles/Styles.axaml` to customize:
 - Corner radius values
 - Button styles
 
-## Customization
-
-### Adding Navigation Items
-
-Edit `ShellViewModel.cs` and modify the `BuildNavigation()` method:
-
-```csharp
-private static IEnumerable<NavigationItem> BuildNavigation()
-    => new[]
-    {
-        new NavigationItem("home", "Overview", "Description", "🏠", false),
-        new NavigationItem("library", "Library", "Description", "📚", false),
-        // Add your navigation items here
-    };
-```
-
-### Adding New Views
-
-1. Create a new XAML file in a `Views/` folder (create if needed):
-   ```xml
-   <UserControl xmlns="https://github.com/avaloniaui">
-       <!-- Your view content -->
-   </UserControl>
-   ```
-
-2. Create a corresponding ViewModel:
-   ```csharp
-   public partial class YourViewModel : ObservableObject
-   {
-       // Your view model logic
-   }
-   ```
-
-3. Update navigation to include your new view
-
-### Adding Services
-
-1. Create a service class in the `Services/` folder
-2. Register it in `App.axaml.cs` if dependency injection is needed
-3. Use it in your ViewModels
-
 ## Building and Publishing
 
 ### Debug Build
 
 ```bash
-dotnet build DesktopBoilerplate.App
+dotnet build SimpleDhcpdDesktop.App
 ```
 
 ### Release Build
 
 ```bash
-dotnet build DesktopBoilerplate.App -c Release
+dotnet build SimpleDhcpdDesktop.App -c Release
 ```
 
 ### Publishing for Specific Platforms
 
 #### Windows (x64)
 ```bash
-dotnet publish DesktopBoilerplate.App -c Release -r win-x64 --self-contained false
+dotnet publish SimpleDhcpdDesktop.App -c Release -r win-x64 --self-contained false
 ```
 
 #### macOS (Intel)
 ```bash
-dotnet publish DesktopBoilerplate.App -c Release -r osx-x64 --self-contained true
+dotnet publish SimpleDhcpdDesktop.App -c Release -r osx-x64 --self-contained true
 ```
 
 #### macOS (Apple Silicon)
 ```bash
-dotnet publish DesktopBoilerplate.App -c Release -r osx-arm64 --self-contained true
+dotnet publish SimpleDhcpdDesktop.App -c Release -r osx-arm64 --self-contained true
 ```
 
 #### Linux (x64)
 ```bash
-dotnet publish DesktopBoilerplate.App -c Release -r linux-x64 --self-contained true
+dotnet publish SimpleDhcpdDesktop.App -c Release -r linux-x64 --self-contained true
 ```
 
 #### Linux (ARM64)
 ```bash
-dotnet publish DesktopBoilerplate.App -c Release -r linux-arm64 --self-contained true
+dotnet publish SimpleDhcpdDesktop.App -c Release -r linux-arm64 --self-contained true
 ```
 
 ### Self-Contained vs Framework-Dependent
@@ -308,7 +306,7 @@ dotnet publish DesktopBoilerplate.App -c Release -r linux-arm64 --self-contained
 - **Self-contained** (`--self-contained true`): Includes the .NET runtime. Larger size but no runtime installation required.
 - **Framework-dependent** (`--self-contained false`): Requires .NET runtime to be installed on the target machine. Smaller size.
 
-Published files will be in: `DesktopBoilerplate.App/bin/Release/net8.0/{runtime-identifier}/publish/`
+Published files will be in: `SimpleDhcpdDesktop.App/bin/Release/net8.0/{runtime-identifier}/publish/`
 
 ## Development Workflow
 
@@ -323,7 +321,7 @@ Published files will be in: `DesktopBoilerplate.App/bin/Release/net8.0/{runtime-
 The application supports XAML Hot Reload for rapid UI development:
 
 ```bash
-dotnet watch --project DesktopBoilerplate.App
+dotnet watch --project SimpleDhcpdDesktop.App
 ```
 
 Changes to XAML files will automatically refresh the running application.
@@ -375,6 +373,12 @@ The project uses:
 2. Check that the file is marked as an Avalonia resource in the `.csproj` file
 3. Review `AppConfigurationLoader.cs` for loading logic
 
+### Sudo Password Prompt Issues
+
+1. Ensure you have sudo access on your system
+2. Check that the file path requires elevation (system directories like `/etc/`)
+3. Verify the password dialog is appearing correctly
+
 ### Platform-Specific Issues
 
 - **macOS**: Ensure you have the latest Xcode Command Line Tools installed
@@ -383,10 +387,18 @@ The project uses:
 
 ## Additional Resources
 
+- [Simple DHCP Daemon](https://github.com/simpledaemons/simple-dhcpd) - The DHCP server this app configures
 - [Avalonia UI Documentation](https://docs.avaloniaui.net/)
 - [.NET Documentation](https://docs.microsoft.com/dotnet/)
 - [CommunityToolkit.Mvvm](https://learn.microsoft.com/dotnet/communitytoolkit/mvvm/)
 
+## Support
+
+- **Repository**: [https://github.com/simpledaemons/simple-dhcpd-desktop](https://github.com/simpledaemons/simple-dhcpd-desktop)
+- **Documentation**: [https://github.com/simpledaemons/simple-dhcpd-desktop/blob/main/docs/DOCUMENTATION.md](https://github.com/simpledaemons/simple-dhcpd-desktop/blob/main/docs/DOCUMENTATION.md)
+- **Support Email**: support@simpledaemons.com
+- **Issues**: [GitHub Issues](https://github.com/simpledaemons/simple-dhcpd-desktop/issues)
+
 ## License
 
-MIT License - See LICENSE file for details
+Apache License 2.0 - See LICENSE file for details

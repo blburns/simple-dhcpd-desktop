@@ -1,6 +1,6 @@
 # Documentation Index
 
-Welcome to the Desktop Boilerplate documentation. This folder contains comprehensive guides for using and developing with this application.
+Welcome to the Simple DHCP Daemon Desktop Application documentation. This folder contains comprehensive guides for using and developing with this application.
 
 ## Documentation Files
 
@@ -38,3 +38,10 @@ Troubleshooting guide for macOS SDK detection issues:
 - **Getting Started**: Start with [QUICK_START.md](./QUICK_START.md)
 - **Full Documentation**: See [DOCUMENTATION.md](./DOCUMENTATION.md)
 - **SDK Issues**: Check [SDK_MANAGEMENT.md](./SDK_MANAGEMENT.md) or [FIX_SDK_DETECTION.md](./FIX_SDK_DETECTION.md)
+
+## Project Information
+
+- **Name**: Simple DHCP Daemon Desktop Application
+- **Company**: SimpleDaemons
+- **Repository**: [https://github.com/simpledaemons/simple-dhcpd-desktop](https://github.com/simpledaemons/simple-dhcpd-desktop)
+- **Support**: support@simpledaemons.com

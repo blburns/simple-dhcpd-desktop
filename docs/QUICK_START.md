@@ -17,18 +17,18 @@ If the command is not found, install .NET 8 SDK:
 
 ### Option 1: Standard Run
 ```bash
-cd DesktopBoilerplate.App
+cd SimpleDhcpdDesktop.App
 dotnet run
 ```
 
 ### Option 2: From Project Root
 ```bash
-dotnet run --project DesktopBoilerplate.App
+dotnet run --project SimpleDhcpdDesktop.App
 ```
 
 ### Option 3: With Hot Reload (Recommended for Development)
 ```bash
-dotnet watch --project DesktopBoilerplate.App
+dotnet watch --project SimpleDhcpdDesktop.App
 ```
 
 ## First Time Setup
@@ -45,17 +45,33 @@ dotnet watch --project DesktopBoilerplate.App
 
 3. **Run the application:**
    ```bash
-   dotnet run --project DesktopBoilerplate.App
+   dotnet run --project SimpleDhcpdDesktop.App
    ```
 
 ## What to Expect
 
 When you run the application, you should see:
 - A window with a dark theme
-- A header showing the app name and version
-- A navigation sidebar on the left with items: Overview, Library, Activity, Settings
-- A main content area with placeholder cards
-- Buttons in the header for Docs, Source, and Support
+- A header showing "Simple DHCP Daemon Configuration" with Save and Load buttons
+- A navigation sidebar on the left with sections:
+  - Overview
+  - Server Settings
+  - Subnets
+  - Global Options
+  - Security
+  - Performance
+  - Logging
+- A main content area that changes based on the selected navigation item
+- Configuration file path displayed in the Overview section
+
+## Configuration
+
+The application automatically loads the default configuration file based on your platform:
+- **Windows**: `C:\ProgramData\Simple DHCP Daemon\simple-dhcpd.conf`
+- **Linux**: `/etc/simple-dhcpd/simple-dhcpd.conf`
+- **macOS**: `/usr/local/etc/simple-dhcpd/simple-dhcpd.conf`
+
+When saving to system directories, you'll be prompted for your administrator/sudo password.
 
 ## Troubleshooting
 
@@ -69,5 +85,9 @@ When you run the application, you should see:
 **Application won't start**
 - Check that you're in the correct directory
 - Verify .NET SDK version: `dotnet --version` (should be 8.0.x or later)
+
+**Sudo password prompt not appearing**
+- Ensure you're saving to a system directory (like `/etc/`)
+- Check that you have sudo access configured
 
 For more detailed information, see [DOCUMENTATION.md](./DOCUMENTATION.md)

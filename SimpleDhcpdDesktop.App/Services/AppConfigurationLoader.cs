@@ -31,11 +31,11 @@ public static class AppConfigurationLoader
             }
 
             var metadata = new AppMetadata(
-                appElement.GetPropertyOrDefault("Name", "Simple DHCP Daemon Desktop Application"),
+                appElement.GetPropertyOrDefault("Name", "Simple DHCP - Desktop App"),
                 appElement.GetPropertyOrDefault("Company", "SimpleDaemons"),
-                appElement.GetPropertyOrDefault("Description", "Simple DHCP Daemon Desktop Application"),
-                appElement.GetPropertyOrDefault("RepositoryUrl", "https://github.com/simpledaemons/simple-dhcpd"),
-                appElement.GetPropertyOrDefault("DocumentationUrl", "https://github.com/simpledaemons/simple-dhcpd"),
+                appElement.GetPropertyOrDefault("Description", "Simple DHCP - Desktop Application"),
+                appElement.GetPropertyOrDefault("RepositoryUrl", "https://github.com/simpledaemons/simple-dhcpd-desktop"),
+                appElement.GetPropertyOrDefault("DocumentationUrl", "https://github.com/simpledaemons/simple-dhcpd-desktop/blob/main/docs/DOCUMENTATION.md"),
                 appElement.GetPropertyOrDefault("SupportEmail", "support@simpledaemons.com"),
                 assembly.GetName().Version?.ToString() ?? "0.1.0");
 

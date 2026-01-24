@@ -1,36 +1,41 @@
-# Desktop Boilerplate (Avalonia UI)
+# Simple DHCP Daemon - Desktop Configuration Application
 
-A cross-platform desktop starter built with [Avalonia UI](https://avaloniaui.net/) and .NET 8. The layout and project structure are opinionated toward productivity apps like Spotify, VS Code, or Slack—complete with navigation, theming, and platform-aware helpers.
+A cross-platform desktop application for configuring the [Simple DHCP Daemon](https://github.com/simpledaemons/simple-dhcpd) built with [Avalonia UI](https://avaloniaui.net/) and .NET 8.
 
 > 📖 **For comprehensive documentation, see [docs/DOCUMENTATION.md](./docs/DOCUMENTATION.md)**
+
+## Overview
+
+Simple DHCP Daemon Desktop Application provides a user-friendly graphical interface for configuring all aspects of the simple-dhcpd DHCP server, including:
+
+- Server settings and listen addresses
+- Subnet configuration with IP ranges, reservations, and exclusions
+- Global DHCP options
+- Security settings (snooping, filtering, rate limiting, authentication)
+- Performance and lease database configuration
+- Logging configuration
 
 ## Prerequisites
 
 - **.NET 8 SDK** or later ([Download](https://dotnet.microsoft.com/download))
 - Verify installation: `dotnet --version` (should show 8.0.x or later)
+- **Simple DHCP Daemon** installed on the target system
 
 ## Features
 
-- **True cross platform**: single `net8.0` target with runtime identifiers for Windows, macOS (Intel + Apple Silicon), and Linux (x64/ARM64).
-- **MVVM ready**: leverages `CommunityToolkit.Mvvm` with a `ShellViewModel` wired up for compiled bindings.
-- **Theming + resources**: shared resource dictionaries for colors, spacing, and component styles.
-- **Config-driven branding**: update `Assets/appsettings.json` for app name, description, URLs, and support info.
-- **Platform helpers**: utility for opening browser links or mail clients using native mechanisms.
-
-## Structure
-
-- `App.axaml` / `App.axaml.cs`: application bootstrap and DI-light wiring for the shell.
-- `MainWindow.axaml`: shell layout with header, navigation rail, and content panels.
-- `ViewModels/`: view models ready for expansion.
-- `Models/`: shared data contracts such as `AppMetadata` and `NavigationItem`.
-- `Services/`: lightweight configuration loader with Avalonia asset support.
-- `Resources/Styles/`: Fluent-inspired resource dictionaries for branding and spacing.
-- `Assets/`: configuration and future static assets (icons, images, etc.).
-- `templates/`: customized `dotnet new` template that packages this boilerplate (metadata sourced from the upstream `avalonia.app` template).
+- **True cross-platform**: Runs on Windows, macOS (Intel + Apple Silicon), and Linux (x64/ARM64)
+- **Complete configuration management**: Configure all DHCP server settings through an intuitive UI
+- **Elevated permissions support**: Automatically prompts for sudo/admin password when saving to system directories
+- **Real-time validation**: Visual feedback for configuration changes
+- **Modern UI**: Clean, pixel-perfect interface with consistent styling
 
 ## Quick Start
 
 ```bash
+# Clone the repository
+git clone https://github.com/simpledaemons/simple-dhcpd-desktop.git
+cd simple-dhcpd-desktop
+
 # Restore dependencies
 dotnet restore
 
@@ -38,49 +43,54 @@ dotnet restore
 dotnet build
 
 # Run the application
-dotnet run --project DesktopBoilerplate.App
+dotnet run --project SimpleDhcpdDesktop.App
 ```
 
-> 💡 **Tip**: Use `dotnet watch --project DesktopBoilerplate.App` for hot reload during development
+> 💡 **Tip**: Use `dotnet watch --project SimpleDhcpdDesktop.App` for hot reload during development
 
-## Cross-platform publishing
+## Configuration
+
+The application automatically detects the default configuration file location based on your platform:
+
+- **Windows**: `C:\ProgramData\Simple DHCP Daemon\simple-dhcpd.conf`
+- **Linux**: `/etc/simple-dhcpd/simple-dhcpd.conf`
+- **macOS**: `/usr/local/etc/simple-dhcpd/simple-dhcpd.conf`
+
+When saving to system directories, the application will prompt for administrator/sudo password.
+
+## Cross-platform Publishing
 
 ```bash
 # Windows
-dotnet publish DesktopBoilerplate.App -c Release -r win-x64 --self-contained false
+dotnet publish SimpleDhcpdDesktop.App -c Release -r win-x64 --self-contained false
 
 # macOS (Universal)
-dotnet publish DesktopBoilerplate.App -c Release -r osx-x64 --self-contained true
-dotnet publish DesktopBoilerplate.App -c Release -r osx-arm64 --self-contained true
+dotnet publish SimpleDhcpdDesktop.App -c Release -r osx-x64 --self-contained true
+dotnet publish SimpleDhcpdDesktop.App -c Release -r osx-arm64 --self-contained true
 
 # Linux
-dotnet publish DesktopBoilerplate.App -c Release -r linux-x64 --self-contained true
-dotnet publish DesktopBoilerplate.App -c Release -r linux-arm64 --self-contained true
+dotnet publish SimpleDhcpdDesktop.App -c Release -r linux-x64 --self-contained true
+dotnet publish SimpleDhcpdDesktop.App -c Release -r linux-arm64 --self-contained true
 ```
 
 Use `--self-contained true` when you want to ship the runtime; omit (or set false) when targeting environments with the .NET runtime pre-installed.
 
-## Customize
+## Project Structure
 
-- Update `Assets/appsettings.json` for branding and support links.
-- Replace or extend the navigation items in `ViewModels/ShellViewModel`.
-- Add new views and view models under `Views/` and `ViewModels/` respectively, then register them with navigation.
-- Drop your own icons, fonts, or imagery under `Assets/` (they're already marked as Avalonia resources in the project file).
-
-## Testing the layout
-
-Avalonia supports XAML Hot Reload along with `dotnet watch`:
-
-```bash
-dotnet watch --project DesktopBoilerplate.App
-```
+- `SimpleDhcpdDesktop.App/`: Main application project
+  - `Models/`: Configuration data models
+  - `ViewModels/`: MVVM view models for all configuration sections
+  - `Views/`: UI views for each configuration section
+  - `Services/`: Configuration file I/O and elevated permissions handling
+  - `Converters/`: Value converters for data binding
+  - `Resources/`: Styles and themes
+  - `Assets/`: Application metadata and configuration
 
 ## Documentation
 
 For detailed information about:
 - Architecture and design patterns
 - Configuration options
-- Customization guide
 - Building and publishing
 - Troubleshooting
 
@@ -88,12 +98,25 @@ See [docs/DOCUMENTATION.md](./docs/DOCUMENTATION.md)
 
 ### Managing Multiple .NET SDK Versions
 
-If you have multiple .NET SDK versions installed, see [docs/SDK_MANAGEMENT.md](./docs/SDK_MANAGEMENT.md) for guidance on:
-- Selecting which SDK version to use
-- Using `global.json` to pin SDK versions
-- Troubleshooting SDK version issues
+If you have multiple .NET SDK versions installed, see [docs/SDK_MANAGEMENT.md](./docs/SDK_MANAGEMENT.md) for guidance.
+
+## Contributing
+
+Contributions are welcome! Please see the [SimpleDaemons contributing guidelines](https://github.com/simpledaemons/simple-dhcpd/blob/main/CONTRIBUTING.md).
 
 ## License
 
-MIT – tweak to suit your organization.
+Apache License 2.0 - see the [LICENSE](LICENSE) file for details.
 
+## Support
+
+- **Repository**: [https://github.com/simpledaemons/simple-dhcpd-desktop](https://github.com/simpledaemons/simple-dhcpd-desktop)
+- **Documentation**: [https://github.com/simpledaemons/simple-dhcpd-desktop/blob/main/docs/DOCUMENTATION.md](https://github.com/simpledaemons/simple-dhcpd-desktop/blob/main/docs/DOCUMENTATION.md)
+- **Support Email**: support@simpledaemons.com
+- **Issues**: [GitHub Issues](https://github.com/simpledaemons/simple-dhcpd-desktop/issues)
+
+---
+
+**Simple DHCP Daemon Desktop Application** - Modern configuration UI for the Simple DHCP Daemon
+
+Made with ❤️ by [SimpleDaemons](https://github.com/simpledaemons)

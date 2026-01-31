@@ -8,7 +8,7 @@ First, verify you have .NET SDK installed:
 dotnet --version
 ```
 
-If the command is not found, install .NET 8 SDK:
+If the command is not found, install .NET 9 SDK version 9.0.310:
 - **macOS**: `brew install dotnet` or download from [dotnet.microsoft.com](https://dotnet.microsoft.com/download)
 - **Windows**: Download installer from [dotnet.microsoft.com](https://dotnet.microsoft.com/download)
 - **Linux**: Follow distribution-specific instructions at [dotnet.microsoft.com](https://dotnet.microsoft.com/download)
@@ -76,7 +76,7 @@ When saving to system directories, you'll be prompted for your administrator/sud
 ## Troubleshooting
 
 **"dotnet: command not found"**
-- Install .NET 8 SDK from [dotnet.microsoft.com](https://dotnet.microsoft.com/download)
+- Install .NET 9 SDK version 9.0.310 from [dotnet.microsoft.com](https://dotnet.microsoft.com/download)
 
 **Build errors**
 - Run `dotnet restore` to restore NuGet packages
@@ -84,7 +84,7 @@ When saving to system directories, you'll be prompted for your administrator/sud
 
 **Application won't start**
 - Check that you're in the correct directory
-- Verify .NET SDK version: `dotnet --version` (should be 8.0.x or later)
+- Verify .NET SDK version: `dotnet --version` (should be 9.0.310 or later)
 
 **Sudo password prompt not appearing**
 - Ensure you're saving to a system directory (like `/etc/`)

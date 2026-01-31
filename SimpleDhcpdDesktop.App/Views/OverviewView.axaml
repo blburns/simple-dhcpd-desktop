@@ -16,7 +16,7 @@
                      Classes="subheading"
                      Margin="0,4,0,0" />
           <Button Content="Change File..."
-                  Command="{Binding LoadConfigurationCommand}"
+                  Command="{Binding SelectConfigurationFileCommand}"
                   Margin="0,12,0,0"
                   HorizontalAlignment="Left"
                   Padding="12,6" />
@@ -31,7 +31,7 @@
                      Classes="heading" />
           <StackPanel Orientation="Horizontal" Spacing="8" Margin="0,4,0,0">
             <Ellipse Width="12" Height="12" Fill="#FF4CAF50" />
-            <TextBlock Text="Ready"
+            <TextBlock Text="{Binding StatusMessage, FallbackValue='Ready'}"
                        Classes="subheading" />
           </StackPanel>
           <TextBlock Text="{Binding HasUnsavedChanges, Converter={StaticResource BoolToTextConverter}, ConverterParameter='Unsaved Changes|No Changes'}"
@@ -47,9 +47,8 @@
           <TextBlock Text="Quick Actions"
                      Classes="heading" />
           <StackPanel Spacing="8" Margin="0,8,0,0">
-            <Button Content="Save Configuration"
-                    Command="{Binding SaveConfigurationCommand}"
-                    IsEnabled="{Binding HasUnsavedChanges}"
+            <Button Content="Save As..."
+                    Command="{Binding SaveAsConfigurationCommand}"
                     HorizontalAlignment="Stretch"
                     Padding="12,8" />
             <Button Content="New Configuration"

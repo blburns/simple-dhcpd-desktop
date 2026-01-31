@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -12,10 +13,17 @@ public partial class GlobalOptionsViewModel : ObservableObject
     {
         Options = new ObservableCollection<DhcpOptionViewModel>(
             options.Select(o => new DhcpOptionViewModel(o)));
+        
+        // Populate available options
+        AvailableOptions = new ObservableCollection<DhcpOptionDefinition>(
+            DhcpOptionDefinitions.StandardOptions);
     }
 
     [ObservableProperty]
     private ObservableCollection<DhcpOptionViewModel> options;
+
+    [ObservableProperty]
+    private ObservableCollection<DhcpOptionDefinition> availableOptions;
 
     [RelayCommand]
     private void AddOption()

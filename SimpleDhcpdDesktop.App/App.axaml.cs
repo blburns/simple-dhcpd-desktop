@@ -19,10 +19,17 @@ public partial class App : Application
         {
             var metadata = AppConfigurationLoader.Load();
             var configService = new SimpleDhcpdDesktop.App.Services.DhcpConfigurationService();
-            desktop.MainWindow = new MainWindow
+            var shellViewModel = new ShellViewModel(metadata, configService);
+            
+            var mainWindow = new MainWindow
             {
-                DataContext = new ShellViewModel(metadata, configService)
+                DataContext = shellViewModel
             };
+            
+            // Pass MainWindow reference to MainConfigurationViewModel for file dialogs
+            shellViewModel.Configuration.SetMainWindow(mainWindow);
+            
+            desktop.MainWindow = mainWindow;
         }
 
         base.OnFrameworkInitializationCompleted();

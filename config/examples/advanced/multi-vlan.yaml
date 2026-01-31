@@ -1,0 +1,211 @@
+dhcp:
+  listen:
+  - 0.0.0.0:67
+  listenAddresses: 
+  port: 
+  subnets:
+  - name: mgmt-vlan
+    network: 192.168.1.0
+    range: 192.168.1.100-192.168.1.250
+    rangeStart: 
+    rangeEnd: 
+    prefixLength: 
+    gateway: 192.168.1.1
+    dnsServers:
+    - 8.8.8.8
+    - 4.4.4.4
+    domainName: d1ns.com
+    leaseTime: 
+    maxLeaseTime: 
+    options:
+    - name: DNS_SERVERS
+      value: 
+    - name: DOMAIN_NAME
+      value: 
+    - name: ROUTER
+      value: 
+    - name: NTP_SERVERS
+      value: 
+    reservations:
+    - macAddress: 
+      ipAddress: 
+      hostname: core-switch
+      description: 
+    - macAddress: 
+      ipAddress: 
+      hostname: backup-switch
+      description: 
+    exclusions:
+    - start: 192.168.1.1
+      end: 192.168.1.99
+  - name: prod-servers
+    network: 192.168.10.0
+    range: 192.168.10.100-192.168.10.200
+    rangeStart: 
+    rangeEnd: 
+    prefixLength: 
+    gateway: 192.168.10.1
+    dnsServers: 
+    domainName: 
+    leaseTime: 
+    maxLeaseTime: 
+    options:
+    - name: DNS_SERVERS
+      value: 
+    - name: DOMAIN_NAME
+      value: 
+    - name: ROUTER
+      value: 
+    - name: NTP_SERVERS
+      value: 
+    reservations:
+    - macAddress: 
+      ipAddress: 
+      hostname: web-server-01
+      description: 
+    - macAddress: 
+      ipAddress: 
+      hostname: db-server-01
+      description: 
+    - macAddress: 
+      ipAddress: 
+      hostname: app-server-01
+      description: 
+    exclusions:
+    - start: 192.168.10.1
+      end: 192.168.10.99
+  - name: dev-environment
+    network: 192.168.20.0
+    range: 192.168.20.100-192.168.20.200
+    rangeStart: 
+    rangeEnd: 
+    prefixLength: 
+    gateway: 192.168.20.1
+    dnsServers: 
+    domainName: 
+    leaseTime: 
+    maxLeaseTime: 
+    options:
+    - name: DNS_SERVERS
+      value: 
+    - name: DOMAIN_NAME
+      value: 
+    - name: ROUTER
+      value: 
+    reservations: []
+    exclusions:
+    - start: 192.168.20.1
+      end: 192.168.20.49
+  - name: guest-wifi
+    network: 192.168.100.0
+    range: 192.168.100.100-192.168.100.200
+    rangeStart: 
+    rangeEnd: 
+    prefixLength: 
+    gateway: 192.168.100.1
+    dnsServers: 
+    domainName: 
+    leaseTime: 
+    maxLeaseTime: 
+    options:
+    - name: DNS_SERVERS
+      value: 
+    - name: DOMAIN_NAME
+      value: 
+    - name: ROUTER
+      value: 
+    reservations: []
+    exclusions:
+    - start: 192.168.100.1
+      end: 192.168.100.9
+  - name: iot-devices
+    network: 192.168.50.0
+    range: 192.168.50.100-192.168.50.100
+    rangeStart: 
+    rangeEnd: 
+    prefixLength: 
+    gateway: 192.168.50.1
+    dnsServers: 
+    domainName: 
+    leaseTime: 
+    maxLeaseTime: 
+    options:
+    - name: DNS_SERVERS
+      value: 
+    - name: DOMAIN_NAME
+      value: 
+    - name: ROUTER
+      value: 
+    reservations:
+    - macAddress: 
+      ipAddress: 
+      hostname: smart-switch-01
+      description: 
+    - macAddress: 
+      ipAddress: 
+      hostname: smart-bulb-01
+      description: 
+    exclusions:
+    - start: 192.168.50.1
+      end: 192.168.50.19
+  globalOptions:
+  - name: domain-name
+    value: d1ns.com
+  - name: domain-name-servers
+    value: 8.8.8.8,4.4.4.4
+  - name: routers
+    value: 10.0.0.1
+  security:
+    enable: 
+    dhcpSnooping:
+      enabled: 
+      trustedInterfaces: 
+      logging: 
+      validation: 
+    macFiltering:
+      enabled: 
+      mode: 
+      rules: []
+    ipFiltering:
+      enabled: 
+      mode: 
+      rules: []
+    rateLimiting:
+      enabled: 
+      rules: []
+    option82:
+      enabled: 
+      validation: 
+      rules: []
+      trustedRelayAgents: []
+    authentication:
+      enabled: 
+      key: 
+      clientCredentials: []
+    securityEvents:
+      enableLogging: 
+      logFile: 
+      eventCallback: 
+      retentionDays: 
+  performance:
+    maxLeases: 
+    leaseDatabase:
+      type: 
+      path: 
+      backup: 
+      backupInterval: 
+      backupRetention: 
+  logging:
+    enable: 
+    level: 
+    logFile: 
+    format: 
+    rotation: 
+    maxSize: 
+    maxFiles: 
+  monitoring: 
+  configFile: 
+  leaseFile: 
+  enableLogging: 
+  enableSecurity: 
+  maxLeases: 

@@ -2,7 +2,7 @@
 
 ## Overview
 
-Simple DHCP Daemon Desktop Application is a cross-platform desktop configuration tool for the [Simple DHCP Daemon](https://github.com/simpledaemons/simple-dhcpd) built with [Avalonia UI](https://avaloniaui.net/) and .NET 8. It provides a modern, intuitive graphical interface for configuring all aspects of the DHCP server on Windows, macOS (Intel + Apple Silicon), and Linux.
+Simple DHCP Daemon Desktop Application is a cross-platform desktop configuration tool for the [Simple DHCP Daemon](https://github.com/simpledaemons/simple-dhcpd) built with [Avalonia UI](https://avaloniaui.net/) and .NET 9. It provides a modern, intuitive graphical interface for configuring all aspects of the DHCP server on Windows, macOS (Intel + Apple Silicon), and Linux.
 
 The application features a clean, modern UI with comprehensive configuration management for:
 - Server settings and listen addresses
@@ -28,9 +28,9 @@ The application features a clean, modern UI with comprehensive configuration man
 
 Before running this application, ensure you have the following installed:
 
-1. **.NET 8 SDK** or later
+1. **.NET 9 SDK** version 9.0.310 or later
    - Download from: https://dotnet.microsoft.com/download
-   - Verify installation: `dotnet --version` (should show 8.0.x or later)
+   - Verify installation: `dotnet --version` (should show 9.0.310 or later)
 
 2. **Simple DHCP Daemon** (optional, for testing)
    - The desktop app can configure the daemon even if it's not currently running
@@ -58,9 +58,9 @@ If you have multiple .NET SDK versions installed, you can control which one is u
 3. **Pin SDK version using `global.json`:**
    
    This project includes a `global.json` file that specifies the SDK version. The file uses:
-   - `version`: Minimum SDK version required (8.0.0)
+   - `version`: Minimum SDK version required (9.0.310)
    - `rollForward`: How to handle version matching
-     - `latestMinor`: Use the latest minor version (e.g., 8.0.0 → 8.0.100)
+     - `latestPatch`: Use the latest patch version (e.g., 9.0.310 → 9.0.311)
      - `latestPatch`: Use the latest patch version
      - `latestMajor`: Use the latest major version
      - `disable`: Use exact version only
@@ -69,7 +69,7 @@ If you have multiple .NET SDK versions installed, you can control which one is u
    ```json
    {
      "sdk": {
-       "version": "8.0.0",
+       "version": "9.0.310",
        "rollForward": "latestMinor"
      }
    }
@@ -306,7 +306,7 @@ dotnet publish SimpleDhcpdDesktop.App -c Release -r linux-arm64 --self-contained
 - **Self-contained** (`--self-contained true`): Includes the .NET runtime. Larger size but no runtime installation required.
 - **Framework-dependent** (`--self-contained false`): Requires .NET runtime to be installed on the target machine. Smaller size.
 
-Published files will be in: `SimpleDhcpdDesktop.App/bin/Release/net8.0/{runtime-identifier}/publish/`
+Published files will be in: `SimpleDhcpdDesktop.App/bin/Release/net9.0/{runtime-identifier}/publish/`
 
 ## Development Workflow
 
@@ -348,7 +348,7 @@ The project uses:
    ```bash
    dotnet --version
    ```
-   Should be 8.0.x or later.
+   Should be 9.0.310 or later.
 
 2. **Restore dependencies:**
    ```bash

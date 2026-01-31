@@ -1,0 +1,202 @@
+{
+  "dhcp": {
+    "listen": [
+      "0.0.0.0:67"
+    ],
+    "subnets": [
+      {
+        "name": "mgmt-vlan",
+        "network": "192.168.1.0",
+        "range": "192.168.1.100-192.168.1.250",
+        "gateway": "192.168.1.1",
+        "dnsServers": [
+          "8.8.8.8",
+          "4.4.4.4"
+        ],
+        "domainName": "d1ns.com",
+        "options": [
+          {
+            "name": "DNS_SERVERS"
+          },
+          {
+            "name": "DOMAIN_NAME"
+          },
+          {
+            "name": "ROUTER"
+          },
+          {
+            "name": "NTP_SERVERS"
+          }
+        ],
+        "reservations": [
+          {
+            "hostname": "core-switch"
+          },
+          {
+            "hostname": "backup-switch"
+          }
+        ],
+        "exclusions": [
+          {
+            "start": "192.168.1.1",
+            "end": "192.168.1.99"
+          }
+        ]
+      },
+      {
+        "name": "prod-servers",
+        "network": "192.168.10.0",
+        "range": "192.168.10.100-192.168.10.200",
+        "gateway": "192.168.10.1",
+        "options": [
+          {
+            "name": "DNS_SERVERS"
+          },
+          {
+            "name": "DOMAIN_NAME"
+          },
+          {
+            "name": "ROUTER"
+          },
+          {
+            "name": "NTP_SERVERS"
+          }
+        ],
+        "reservations": [
+          {
+            "hostname": "web-server-01"
+          },
+          {
+            "hostname": "db-server-01"
+          },
+          {
+            "hostname": "app-server-01"
+          }
+        ],
+        "exclusions": [
+          {
+            "start": "192.168.10.1",
+            "end": "192.168.10.99"
+          }
+        ]
+      },
+      {
+        "name": "dev-environment",
+        "network": "192.168.20.0",
+        "range": "192.168.20.100-192.168.20.200",
+        "gateway": "192.168.20.1",
+        "options": [
+          {
+            "name": "DNS_SERVERS"
+          },
+          {
+            "name": "DOMAIN_NAME"
+          },
+          {
+            "name": "ROUTER"
+          }
+        ],
+        "reservations": [],
+        "exclusions": [
+          {
+            "start": "192.168.20.1",
+            "end": "192.168.20.49"
+          }
+        ]
+      },
+      {
+        "name": "guest-wifi",
+        "network": "192.168.100.0",
+        "range": "192.168.100.100-192.168.100.200",
+        "gateway": "192.168.100.1",
+        "options": [
+          {
+            "name": "DNS_SERVERS"
+          },
+          {
+            "name": "DOMAIN_NAME"
+          },
+          {
+            "name": "ROUTER"
+          }
+        ],
+        "reservations": [],
+        "exclusions": [
+          {
+            "start": "192.168.100.1",
+            "end": "192.168.100.9"
+          }
+        ]
+      },
+      {
+        "name": "iot-devices",
+        "network": "192.168.50.0",
+        "range": "192.168.50.100-192.168.50.100",
+        "gateway": "192.168.50.1",
+        "options": [
+          {
+            "name": "DNS_SERVERS"
+          },
+          {
+            "name": "DOMAIN_NAME"
+          },
+          {
+            "name": "ROUTER"
+          }
+        ],
+        "reservations": [
+          {
+            "hostname": "smart-switch-01"
+          },
+          {
+            "hostname": "smart-bulb-01"
+          }
+        ],
+        "exclusions": [
+          {
+            "start": "192.168.50.1",
+            "end": "192.168.50.19"
+          }
+        ]
+      }
+    ],
+    "globalOptions": [
+      {
+        "name": "domain-name",
+        "value": "d1ns.com"
+      },
+      {
+        "name": "domain-name-servers",
+        "value": "8.8.8.8,4.4.4.4"
+      },
+      {
+        "name": "routers",
+        "value": "10.0.0.1"
+      }
+    ],
+    "security": {
+      "dhcpSnooping": {},
+      "macFiltering": {
+        "rules": []
+      },
+      "ipFiltering": {
+        "rules": []
+      },
+      "rateLimiting": {
+        "rules": []
+      },
+      "option82": {
+        "rules": [],
+        "trustedRelayAgents": []
+      },
+      "authentication": {
+        "clientCredentials": []
+      },
+      "securityEvents": {}
+    },
+    "performance": {
+      "leaseDatabase": {}
+    },
+    "logging": {}
+  }
+}

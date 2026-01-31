@@ -6,6 +6,7 @@
         xmlns:models="clr-namespace:SimpleDhcpdDesktop.App.Models"
         xmlns:views="clr-namespace:SimpleDhcpdDesktop.App.Views"
         xmlns:converters="clr-namespace:SimpleDhcpdDesktop.App.Converters"
+        xmlns:icons="clr-namespace:SimpleDhcpdDesktop.App.Utilities"
         mc:Ignorable="d"
         d:DesignWidth="1200"
         d:DesignHeight="800"
@@ -48,16 +49,53 @@
                     Grid.Column="1"
                     Spacing="12"
                     VerticalAlignment="Center">
-          <Button Content="Save"
-                  Command="{Binding Configuration.SaveConfigurationCommand}"
-                  IsEnabled="{Binding Configuration.HasUnsavedChanges}"
+          <Button Command="{Binding Configuration.ValidateConfigurationCommand}"
                   Padding="16,8"
-                  MinWidth="80" />
-          <Button Content="Load"
-                  Command="{Binding Configuration.LoadConfigurationCommand}"
+                  MinWidth="100">
+            <StackPanel Orientation="Horizontal" Spacing="6">
+              <TextBlock Text="{x:Static icons:FontAwesomeIcons.CircleCheck}" 
+                         FontSize="14" 
+                         VerticalAlignment="Center"
+                         Classes="icon" />
+              <TextBlock Text="Validate" VerticalAlignment="Center" />
+            </StackPanel>
+          </Button>
+          <Button Command="{Binding Configuration.SaveAsConfigurationCommand}"
                   Padding="16,8"
-                  MinWidth="80"
-                  Classes="secondary" />
+                  MinWidth="100"
+                  Classes="secondary">
+            <StackPanel Orientation="Horizontal" Spacing="6">
+              <TextBlock Text="{x:Static icons:FontAwesomeIcons.FloppyDisk}" 
+                         FontSize="14" 
+                         VerticalAlignment="Center"
+                         Classes="icon" />
+              <TextBlock Text="Save As" VerticalAlignment="Center" />
+            </StackPanel>
+          </Button>
+          <Button Command="{Binding Configuration.SelectConfigurationFileCommand}"
+                  Padding="16,8"
+                  MinWidth="100"
+                  Classes="secondary">
+            <StackPanel Orientation="Horizontal" Spacing="6">
+              <TextBlock Text="{x:Static icons:FontAwesomeIcons.FolderOpen}" 
+                         FontSize="14" 
+                         VerticalAlignment="Center"
+                         Classes="icon" />
+              <TextBlock Text="Open" VerticalAlignment="Center" />
+            </StackPanel>
+          </Button>
+          <Button Command="{Binding Configuration.LoadConfigurationCommand}"
+                  Padding="16,8"
+                  MinWidth="100"
+                  Classes="secondary">
+            <StackPanel Orientation="Horizontal" Spacing="6">
+              <TextBlock Text="{x:Static icons:FontAwesomeIcons.ArrowRotateRight}" 
+                         FontSize="14" 
+                         VerticalAlignment="Center"
+                         Classes="icon" />
+              <TextBlock Text="Reload" VerticalAlignment="Center" />
+            </StackPanel>
+          </Button>
         </StackPanel>
       </Grid>
     </Border>

@@ -17,8 +17,8 @@ Simple DHCP Daemon Desktop Application provides a user-friendly graphical interf
 
 ## Prerequisites
 
-- **.NET 8 SDK** or later ([Download](https://dotnet.microsoft.com/download))
-- Verify installation: `dotnet --version` (should show 8.0.x or later)
+- **.NET 9 SDK** version 9.0.310 or later ([Download](https://dotnet.microsoft.com/download))
+- Verify installation: `dotnet --version` (should show 9.0.310 or later)
 - **Simple DHCP Daemon** installed on the target system
 
 ## Features

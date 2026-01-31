@@ -1,6 +1,7 @@
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:vm="clr-namespace:SimpleDhcpdDesktop.App.ViewModels"
+             xmlns:models="clr-namespace:SimpleDhcpdDesktop.App.Models"
              x:Class="SimpleDhcpdDesktop.App.Views.GlobalOptionsView"
              x:DataType="vm:MainConfigurationViewModel">
   <StackPanel Spacing="24">
@@ -31,19 +32,55 @@
                       CornerRadius="{DynamicResource CornerRadiusSmall}"
                       Padding="16"
                       Margin="0,0,0,12">
-                <Grid ColumnDefinitions="*,*,Auto" ColumnSpacing="12">
-                  <TextBox Text="{Binding Name}"
-                           Watermark="Option name"
-                           Grid.Column="0" />
-                  <TextBox Text="{Binding Value}"
-                           Watermark="Option value"
-                           Grid.Column="1" />
-                  <Button Content="Remove"
-                          Command="{Binding $parent[ItemsControl].(vm:GlobalOptionsViewModel).RemoveOptionCommand}"
-                          CommandParameter="{Binding}"
-                          Grid.Column="2"
-                          Classes="secondary" />
-                </Grid>
+                <StackPanel Spacing="12">
+                  <Grid ColumnDefinitions="2*,3*,Auto" ColumnSpacing="12">
+                    <ComboBox ItemsSource="{Binding AvailableOptions}"
+                              SelectedItem="{Binding SelectedOption, Mode=TwoWay}"
+                              Grid.Column="0"
+                              HorizontalAlignment="Stretch"
+                              PlaceholderText="Select DHCP option...">
+                      <ComboBox.ItemTemplate>
+                        <DataTemplate x:DataType="models:DhcpOptionDefinition">
+                          <StackPanel>
+                            <TextBlock Text="{Binding Name}" FontWeight="SemiBold" />
+                            <TextBlock Text="{Binding Description}" 
+                                       FontSize="11" 
+                                       Opacity="0.7"
+                                       TextWrapping="Wrap" />
+                          </StackPanel>
+                        </DataTemplate>
+                      </ComboBox.ItemTemplate>
+                    </ComboBox>
+                    <TextBox Text="{Binding Value}"
+                             Watermark="Option value"
+                             Grid.Column="1" />
+                    <Button Content="Remove"
+                            Command="{Binding $parent[ItemsControl].((vm:MainConfigurationViewModel)DataContext).GlobalOptions.RemoveOptionCommand}"
+                            CommandParameter="{Binding}"
+                            Grid.Column="2"
+                            Classes="secondary" />
+                  </Grid>
+                  
+                  <!-- Hint section -->
+                  <Border Background="{DynamicResource CardBackground}"
+                          Padding="12,8"
+                          CornerRadius="4"
+                          IsVisible="{Binding SelectedOption, Converter={x:Static ObjectConverters.IsNotNull}}">
+                    <StackPanel Spacing="4">
+                      <TextBlock Text="Format Hint:" 
+                                 FontSize="11" 
+                                 FontWeight="SemiBold"
+                                 Opacity="0.8" />
+                      <TextBlock Text="{Binding SelectedOption.ValueHint}" 
+                                 FontSize="11"
+                                 Opacity="0.7" />
+                      <TextBlock FontSize="11" Opacity="0.6">
+                        <Run Text="Example: " FontStyle="Italic" />
+                        <Run Text="{Binding SelectedOption.Example}" FontFamily="Consolas,Courier New,monospace" />
+                      </TextBlock>
+                    </StackPanel>
+                  </Border>
+                </StackPanel>
               </Border>
             </DataTemplate>
           </ItemsControl.ItemTemplate>

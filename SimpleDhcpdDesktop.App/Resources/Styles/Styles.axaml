@@ -2,9 +2,13 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <Styles.Resources>
     <ResourceDictionary>
-      <ResourceDictionary.MergedDictionaries>
-        <ResourceInclude Source="avares://SimpleDhcpdDesktop.App/Resources/Styles/Colors.axaml" />
-      </ResourceDictionary.MergedDictionaries>
+      <!-- Color definitions (merged from Colors.axaml to avoid duplicate resource error) -->
+      <Color x:Key="BrandColor">#FF5058F5</Color>
+      <Color x:Key="BrandColorDark">#FF3438A8</Color>
+      <Color x:Key="AppBackground">#FF101218</Color>
+      <Color x:Key="SidebarBackground">#FF191B22</Color>
+      <Color x:Key="CardBackground">#FF1F222A</Color>
+      <Color x:Key="AccentForeground">#FFF4F6FF</Color>
 
       <Thickness x:Key="SpacingSmall">4</Thickness>
       <Thickness x:Key="SpacingMedium">12</Thickness>
@@ -12,8 +16,20 @@
 
       <CornerRadius x:Key="CornerRadiusSmall">6</CornerRadius>
       <CornerRadius x:Key="CornerRadiusMedium">12</CornerRadius>
+      
+      <!-- Font Awesome 7 Font Families -->
+      <FontFamily x:Key="FontAwesome">avares://SimpleDhcpdDesktop.App/Assets/Fonts/FontAwesome-7-Free-Solid-900.otf#Font Awesome 7 Free Solid</FontFamily>
+      <FontFamily x:Key="FontAwesomeRegular">avares://SimpleDhcpdDesktop.App/Assets/Fonts/FontAwesome-7-Free-Regular-400.otf#Font Awesome 7 Free Regular</FontFamily>
+      <FontFamily x:Key="FontAwesomeSolid">avares://SimpleDhcpdDesktop.App/Assets/Fonts/FontAwesome-7-Free-Solid-900.otf#Font Awesome 7 Free Solid</FontFamily>
+      <FontFamily x:Key="FontAwesomeBrands">avares://SimpleDhcpdDesktop.App/Assets/Fonts/FontAwesome-7-Free-Brands-Regular-400.otf#Font Awesome 7 Free Brands</FontFamily>
     </ResourceDictionary>
   </Styles.Resources>
+  
+  <!-- Font Awesome Icon Style -->
+  <Style Selector="TextBlock.icon">
+    <Setter Property="FontFamily" Value="{DynamicResource FontAwesome}" />
+    <Setter Property="VerticalAlignment" Value="Center" />
+  </Style>
 
   <Style Selector="TextBlock.heading">
     <Setter Property="FontSize" Value="20" />
@@ -33,4 +49,3 @@
     <Setter Property="Padding" Value="12 10" />
   </Style>
 </Styles>
-

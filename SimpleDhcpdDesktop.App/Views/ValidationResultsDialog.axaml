@@ -1,0 +1,156 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="clr-namespace:SimpleDhcpdDesktop.App.Views"
+        mc:Ignorable="d"
+        d:DesignWidth="600"
+        d:DesignHeight="400"
+        x:Class="SimpleDhcpdDesktop.App.Views.ValidationResultsDialog"
+        x:DataType="vm:ValidationResultsViewModel"
+        Title="Configuration Validation Results"
+        Width="600"
+        Height="400"
+        MinWidth="500"
+        MinHeight="300"
+        WindowStartupLocation="CenterOwner"
+        CanResize="true"
+        Background="{DynamicResource AppBackground}">
+  
+  <Grid RowDefinitions="Auto,*,Auto">
+    <!-- Header -->
+    <Border Grid.Row="0"
+            Background="{DynamicResource SidebarBackground}"
+            Padding="24,16"
+            BorderBrush="{DynamicResource CardBackground}"
+            BorderThickness="0,0,0,1">
+      <StackPanel>
+        <TextBlock Text="Configuration Validation Results"
+                   FontSize="18"
+                   FontWeight="SemiBold"
+                   Foreground="{DynamicResource AccentForeground}" />
+        <TextBlock Text="{Binding Summary}"
+                   FontSize="14"
+                   Opacity="0.85"
+                   Margin="0,4,0,0" />
+      </StackPanel>
+    </Border>
+
+    <!-- Content -->
+    <ScrollViewer Grid.Row="1" Padding="24">
+      <StackPanel Spacing="16">
+        <!-- Errors Section -->
+        <Border Background="{DynamicResource CardBackground}"
+                CornerRadius="8"
+                Padding="16"
+                IsVisible="{Binding HasErrors}">
+          <StackPanel Spacing="12">
+            <StackPanel Orientation="Horizontal" Spacing="8">
+              <TextBlock Text="❌" FontSize="16" VerticalAlignment="Center" />
+              <TextBlock Text="Errors"
+                         FontSize="16"
+                         FontWeight="SemiBold"
+                         Foreground="#FFE74C3C"
+                         VerticalAlignment="Center" />
+              <TextBlock Text="{Binding ErrorCount}"
+                         FontSize="14"
+                         Foreground="#FFE74C3C"
+                         Opacity="0.8"
+                         VerticalAlignment="Center"
+                         Margin="4,0,0,0" />
+            </StackPanel>
+            
+            <ItemsControl ItemsSource="{Binding Errors}">
+              <ItemsControl.ItemTemplate>
+                <DataTemplate x:DataType="x:String">
+                  <Border Background="{DynamicResource SidebarBackground}"
+                          CornerRadius="4"
+                          Padding="12,8"
+                          Margin="0,4">
+                    <TextBlock Text="{Binding}"
+                               TextWrapping="Wrap"
+                               FontFamily="Consolas,Courier New,monospace"
+                               FontSize="12"
+                               Foreground="#FFE74C3C" />
+                  </Border>
+                </DataTemplate>
+              </ItemsControl.ItemTemplate>
+            </ItemsControl>
+          </StackPanel>
+        </Border>
+
+        <!-- Warnings Section -->
+        <Border Background="{DynamicResource CardBackground}"
+                CornerRadius="8"
+                Padding="16"
+                IsVisible="{Binding HasWarnings}">
+          <StackPanel Spacing="12">
+            <StackPanel Orientation="Horizontal" Spacing="8">
+              <TextBlock Text="⚠️" FontSize="16" VerticalAlignment="Center" />
+              <TextBlock Text="Warnings"
+                         FontSize="16"
+                         FontWeight="SemiBold"
+                         Foreground="#FFF39C12"
+                         VerticalAlignment="Center" />
+              <TextBlock Text="{Binding WarningCount}"
+                         FontSize="14"
+                         Foreground="#FFF39C12"
+                         Opacity="0.8"
+                         VerticalAlignment="Center"
+                         Margin="4,0,0,0" />
+            </StackPanel>
+            
+            <ItemsControl ItemsSource="{Binding Warnings}">
+              <ItemsControl.ItemTemplate>
+                <DataTemplate x:DataType="x:String">
+                  <Border Background="{DynamicResource SidebarBackground}"
+                          CornerRadius="4"
+                          Padding="12,8"
+                          Margin="0,4">
+                    <TextBlock Text="{Binding}"
+                               TextWrapping="Wrap"
+                               FontFamily="Consolas,Courier New,monospace"
+                               FontSize="12"
+                               Foreground="#FFF39C12" />
+                  </Border>
+                </DataTemplate>
+              </ItemsControl.ItemTemplate>
+            </ItemsControl>
+          </StackPanel>
+        </Border>
+
+        <!-- Success Message -->
+        <Border Background="{DynamicResource CardBackground}"
+                CornerRadius="8"
+                Padding="24"
+                IsVisible="{Binding IsValid}">
+          <StackPanel Spacing="12" HorizontalAlignment="Center">
+            <TextBlock Text="✅" FontSize="48" HorizontalAlignment="Center" />
+            <TextBlock Text="Configuration is Valid!"
+                       FontSize="18"
+                       FontWeight="SemiBold"
+                       Foreground="#FF4CAF50"
+                       HorizontalAlignment="Center" />
+            <TextBlock Text="No errors or warnings found."
+                       FontSize="14"
+                       Opacity="0.75"
+                       HorizontalAlignment="Center" />
+          </StackPanel>
+        </Border>
+      </StackPanel>
+    </ScrollViewer>
+
+    <!-- Footer -->
+    <Border Grid.Row="2"
+            Background="{DynamicResource SidebarBackground}"
+            Padding="24,16"
+            BorderBrush="{DynamicResource CardBackground}"
+            BorderThickness="0,1,0,0">
+      <Button Content="Close"
+              Command="{Binding CloseCommand}"
+              HorizontalAlignment="Right"
+              Padding="24,10"
+              MinWidth="100" />
+    </Border>
+  </Grid>
+</Window>

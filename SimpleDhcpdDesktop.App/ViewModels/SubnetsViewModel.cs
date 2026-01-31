@@ -192,10 +192,73 @@ public partial class SubnetViewModel : ObservableObject
 public partial class DhcpOptionViewModel : ObservableObject
 {
     private readonly DhcpOption _option;
+    private bool _isUpdatingFromOption = false;
 
     public DhcpOptionViewModel(DhcpOption option)
     {
         _option = option;
+        
+        // Populate available options (same reference as GlobalOptionsViewModel uses)
+        AvailableOptions = new System.Collections.ObjectModel.ObservableCollection<DhcpOptionDefinition>(
+            DhcpOptionDefinitions.StandardOptions);
+        
+        // Initialize SelectedOption
+        InitializeSelectedOption();
+    }
+    
+    [ObservableProperty]
+    private System.Collections.ObjectModel.ObservableCollection<DhcpOptionDefinition> availableOptions;
+    
+    private void InitializeSelectedOption()
+    {
+        // Try to find matching option definition
+        if (!string.IsNullOrEmpty(_option.Name))
+        {
+            System.Diagnostics.Debug.WriteLine($"DhcpOptionViewModel: Looking up option '{_option.Name}'");
+            _isUpdatingFromOption = true;
+            var definition = DhcpOptionDefinitions.GetDefinitionByName(_option.Name);
+            if (definition != null)
+            {
+                System.Diagnostics.Debug.WriteLine($"DhcpOptionViewModel: Found definition for '{_option.Name}' - Code: {definition.Code}");
+                SelectedOption = definition;
+            }
+            else
+            {
+                System.Diagnostics.Debug.WriteLine($"DhcpOptionViewModel: No definition found for '{_option.Name}'");
+            }
+            _isUpdatingFromOption = false;
+        }
+    }
+
+    [ObservableProperty]
+    private DhcpOptionDefinition? selectedOption;
+
+    partial void OnSelectedOptionChanged(DhcpOptionDefinition? value)
+    {
+        if (_isUpdatingFromOption) return;
+        
+        if (value != null)
+        {
+            _isUpdatingFromOption = true;
+            _option.Name = value.Name;
+            _option.Code = value.Code;
+            OnPropertyChanged(nameof(Name));
+            OnPropertyChanged(nameof(Code));
+            _isUpdatingFromOption = false;
+        }
+    }
+
+    public int? Code
+    {
+        get => _option.Code;
+        set
+        {
+            if (_option.Code != value)
+            {
+                _option.Code = value;
+                OnPropertyChanged();
+            }
+        }
     }
 
     public string? Name
@@ -207,24 +270,50 @@ public partial class DhcpOptionViewModel : ObservableObject
             {
                 _option.Name = value;
                 OnPropertyChanged();
+                
+                // Update selected option if name changed externally
+                if (!_isUpdatingFromOption && !string.IsNullOrEmpty(value))
+                {
+                    _isUpdatingFromOption = true;
+                    var definition = DhcpOptionDefinitions.GetDefinitionByName(value);
+                    if (definition != SelectedOption)
+                    {
+                        SelectedOption = definition;
+                    }
+                    _isUpdatingFromOption = false;
+                }
             }
         }
     }
 
     public string? Value
     {
-        get => _option.Value;
+        get => _option.GetEffectiveValue();
         set
         {
-            if (_option.Value != value)
+            var currentValue = _option.GetEffectiveValue();
+            if (currentValue != value)
             {
-                _option.Value = value;
+                _option.SetEffectiveValue(value);
                 OnPropertyChanged();
             }
         }
     }
 
-    public DhcpOption GetOption() => _option;
+    public DhcpOption GetOption()
+    {
+        // Ensure both Value and Data are set for compatibility
+        if (!string.IsNullOrEmpty(_option.Value) && string.IsNullOrEmpty(_option.Data))
+        {
+            _option.Data = _option.Value;
+        }
+        else if (!string.IsNullOrEmpty(_option.Data) && string.IsNullOrEmpty(_option.Value))
+        {
+            _option.Value = _option.Data;
+        }
+        
+        return _option;
+    }
 }
 
 public partial class ReservationViewModel : ObservableObject
